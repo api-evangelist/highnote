@@ -1,0 +1,432 @@
+"""
+Highnote GraphQL Schema (representative subset)
+
+Source: https://docs.highnote.com/docs/api-reference/query
+        https://docs.highnote.com/docs/api-reference/mutation
+        https://docs.highnote.com/docs/api-reference/object
+        https://docs.highnote.com/docs/developers/api/using-the-api
+
+Endpoint (live): https://api.us.highnote.com/graphql
+Endpoint (test): https://api.us.test.highnote.com/graphql
+Auth: HTTP Basic, base64-encoded API key as username (no password).
+
+This is a REPRESENTATIVE SUBSET distilled from the public Highnote documentation,
+not the full machine-generated schema. Field sets on object and input types are
+illustrative of documented operations; the live schema includes many additional
+fields, union members, and input types.
+"""
+
+# ---------------------------------------------------------------------------
+# Scalars
+# ---------------------------------------------------------------------------
+
+scalar DateTime
+scalar JSON
+
+# ---------------------------------------------------------------------------
+# Enums
+# ---------------------------------------------------------------------------
+
+enum CardProductType {
+  PREPAID
+  DEBIT
+  CREDIT
+}
+
+enum PaymentCardFormFactor {
+  VIRTUAL
+  PHYSICAL
+  DIGITAL_WALLET
+}
+
+enum PaymentCardStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  CLOSED
+}
+
+enum FinancialAccountStatus {
+  ACTIVE
+  SUSPENDED
+  CLOSED
+}
+
+enum ApplicationStatus {
+  PENDING
+  APPROVED
+  DENIED
+}
+
+enum TransactionStatus {
+  PENDING
+  APPROVED
+  DECLINED
+  CLEARED
+  REVERSED
+}
+
+enum TransferStatus {
+  PENDING
+  COMPLETED
+  RETURNED
+  FAILED
+}
+
+enum NotificationTargetStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum CardNetwork {
+  VISA
+  MASTERCARD
+}
+
+# ---------------------------------------------------------------------------
+# Common / shared types
+# ---------------------------------------------------------------------------
+
+interface Node {
+  id: ID!
+}
+
+type Money {
+  value: String!
+  currencyCode: String!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type PersonName {
+  givenName: String
+  familyName: String
+}
+
+# ---------------------------------------------------------------------------
+# Card products
+# ---------------------------------------------------------------------------
+
+type CardProduct implements Node {
+  id: ID!
+  name: String!
+  type: CardProductType!
+  status: String!
+  applications(first: Int, after: String): ProductApplicationConnection
+}
+
+# ---------------------------------------------------------------------------
+# Account holders & applications
+# ---------------------------------------------------------------------------
+
+interface AccountHolder {
+  id: ID!
+  status: String!
+}
+
+type PersonAccountHolder implements Node & AccountHolder {
+  id: ID!
+  name: PersonName
+  status: String!
+  email: String
+}
+
+type USBusinessAccountHolder implements Node & AccountHolder {
+  id: ID!
+  businessName: String
+  status: String!
+}
+
+type AccountHolderCardProductApplication implements Node {
+  id: ID!
+  status: ApplicationStatus!
+  cardProduct: CardProduct
+  accountHolder: AccountHolder
+}
+
+type ProductApplicationConnection {
+  edges: [ProductApplicationEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ProductApplicationEdge {
+  cursor: String!
+  node: AccountHolderCardProductApplication!
+}
+
+# ---------------------------------------------------------------------------
+# Financial accounts
+# ---------------------------------------------------------------------------
+
+type FinancialAccountBalances {
+  availableBalance: Money
+  ledgerBalance: Money
+}
+
+type FinancialAccount implements Node {
+  id: ID!
+  name: String
+  status: FinancialAccountStatus!
+  balances: FinancialAccountBalances
+  paymentCards(first: Int, after: String): PaymentCardConnection
+}
+
+# ---------------------------------------------------------------------------
+# Payment cards
+# ---------------------------------------------------------------------------
+
+type PaymentCard implements Node {
+  id: ID!
+  bin: String
+  last4: String
+  expirationDate: String
+  network: CardNetwork
+  formFactor: PaymentCardFormFactor
+  status: PaymentCardStatus!
+}
+
+type PaymentCardConnection {
+  edges: [PaymentCardEdge!]!
+  pageInfo: PageInfo!
+}
+
+type PaymentCardEdge {
+  cursor: String!
+  node: PaymentCard!
+}
+
+# ---------------------------------------------------------------------------
+# Transactions
+# ---------------------------------------------------------------------------
+
+type MerchantDetails {
+  name: String
+  category: String
+}
+
+type PaymentTransaction implements Node {
+  id: ID!
+  status: TransactionStatus!
+  approvedAmount: Money
+  merchantDetails: MerchantDetails
+}
+
+type PaymentTransactionConnection {
+  edges: [PaymentTransactionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type PaymentTransactionEdge {
+  cursor: String!
+  node: PaymentTransaction!
+}
+
+# ---------------------------------------------------------------------------
+# Transfers
+# ---------------------------------------------------------------------------
+
+type FundsTransfer implements Node {
+  id: ID!
+  status: TransferStatus!
+  amount: Money
+  createdAt: DateTime
+}
+
+# ---------------------------------------------------------------------------
+# Collaborative authorization & notifications
+# ---------------------------------------------------------------------------
+
+type CollaborativeAuthorizationEndpoint implements Node {
+  id: ID!
+  url: String!
+  status: NotificationTargetStatus!
+}
+
+type WebhookNotificationTarget implements Node {
+  id: ID!
+  url: String!
+  status: NotificationTargetStatus!
+}
+
+type NotificationEvent implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime
+  payload: JSON
+}
+
+# ---------------------------------------------------------------------------
+# Connections used at the Query root
+# ---------------------------------------------------------------------------
+
+type CardProductConnection {
+  edges: [CardProductEdge!]!
+  pageInfo: PageInfo!
+}
+
+type CardProductEdge {
+  cursor: String!
+  node: CardProduct!
+}
+
+type PersonAccountHolderConnection {
+  edges: [PersonAccountHolderEdge!]!
+  pageInfo: PageInfo!
+}
+
+type PersonAccountHolderEdge {
+  cursor: String!
+  node: PersonAccountHolder!
+}
+
+# ---------------------------------------------------------------------------
+# Inputs (representative)
+# ---------------------------------------------------------------------------
+
+input CreateUSPersonAccountHolderInput {
+  name: PersonNameInput!
+  email: String
+  dateOfBirth: String
+}
+
+input PersonNameInput {
+  givenName: String!
+  familyName: String!
+}
+
+input CreateUSBusinessAccountHolderInput {
+  businessName: String!
+}
+
+input CreateAccountHolderCardProductApplicationInput {
+  cardProductId: ID!
+  accountHolderId: ID!
+}
+
+input IssueFinancialAccountForApplicationInput {
+  applicationId: ID!
+}
+
+input IssuePaymentCardForApplicationInput {
+  applicationId: ID!
+  formFactor: PaymentCardFormFactor!
+}
+
+input AssignPaymentCardToFinancialAccountInput {
+  paymentCardId: ID!
+  financialAccountId: ID!
+}
+
+input AuthorizePaymentCardInput {
+  paymentCardId: ID!
+  amount: MoneyInput!
+}
+
+input CapturePaymentTransactionInput {
+  transactionId: ID!
+  amount: MoneyInput
+}
+
+input ChargePaymentCardInput {
+  paymentCardId: ID!
+  amount: MoneyInput!
+}
+
+input InitiateTransferInput {
+  fromFinancialAccountId: ID!
+  toFinancialAccountId: ID!
+  amount: MoneyInput!
+}
+
+input InitiateAchTransferInput {
+  financialAccountId: ID!
+  externalBankAccountId: ID!
+  amount: MoneyInput!
+}
+
+input AddWebhookNotificationTargetInput {
+  url: String!
+}
+
+input AddSubscriptionsToNotificationTargetInput {
+  notificationTargetId: ID!
+  eventTypes: [String!]!
+}
+
+input AddCollaborativeAuthorizationEndpointInput {
+  url: String!
+}
+
+input MoneyInput {
+  value: String!
+  currencyCode: String!
+}
+
+# ---------------------------------------------------------------------------
+# Root types
+# ---------------------------------------------------------------------------
+
+type Query {
+  ping: String
+  node(id: ID!): Node
+  cardProducts(first: Int, after: String): CardProductConnection
+  personAccountHolders(first: Int, after: String): PersonAccountHolderConnection
+  businessAccountHolders(first: Int, after: String): PersonAccountHolderConnection
+  paymentTransactions(first: Int, after: String): PaymentTransactionConnection
+  transactionBatches(first: Int, after: String): PaymentTransactionConnection
+  notificationEvents(first: Int, after: String): NotificationEvent
+  productApplications(first: Int, after: String): ProductApplicationConnection
+}
+
+type Mutation {
+  # Card products
+  createCardProduct(input: JSON!): CardProduct
+  enableCreditCardFeature(input: JSON!): CardProduct
+  enableCollaborativeAuthorizationFeature(input: JSON!): CardProduct
+
+  # Account holders & applications
+  createUSPersonAccountHolder(input: CreateUSPersonAccountHolderInput!): PersonAccountHolder
+  createUSBusinessAccountHolder(input: CreateUSBusinessAccountHolderInput!): USBusinessAccountHolder
+  createAccountHolderCardProductApplication(input: CreateAccountHolderCardProductApplicationInput!): AccountHolderCardProductApplication
+
+  # Financial accounts
+  issueFinancialAccountForApplication(input: IssueFinancialAccountForApplicationInput!): FinancialAccount
+  assignPaymentCardToFinancialAccount(input: AssignPaymentCardToFinancialAccountInput!): PaymentCard
+
+  # Payment cards
+  issuePaymentCardForApplication(input: IssuePaymentCardForApplicationInput!): PaymentCard
+  activatePaymentCard(input: JSON!): PaymentCard
+  closePaymentCard(input: JSON!): PaymentCard
+
+  # Transactions
+  authorizePaymentCard(input: AuthorizePaymentCardInput!): PaymentTransaction
+  capturePaymentTransaction(input: CapturePaymentTransactionInput!): PaymentTransaction
+  chargePaymentCard(input: ChargePaymentCardInput!): PaymentTransaction
+  initiateCustomerCardTransactionDispute(input: JSON!): PaymentTransaction
+
+  # Transfers
+  initiateTransferBetweenFinancialAccounts(input: InitiateTransferInput!): FundsTransfer
+  initiateAchTransfer(input: InitiateAchTransferInput!): FundsTransfer
+  initiateUnifiedFundsTransfer(input: JSON!): FundsTransfer
+
+  # Collaborative authorization
+  addCollaborativeAuthorizationEndpoint(input: AddCollaborativeAuthorizationEndpointInput!): CollaborativeAuthorizationEndpoint
+  activateCollaborativeAuthorizationEndpoint(input: JSON!): CollaborativeAuthorizationEndpoint
+  deactivateCollaborativeAuthorizationEndpoint(input: JSON!): CollaborativeAuthorizationEndpoint
+
+  # Webhooks / notifications
+  addWebhookNotificationTarget(input: AddWebhookNotificationTargetInput!): WebhookNotificationTarget
+  activateNotificationTarget(input: JSON!): WebhookNotificationTarget
+  deactivateNotificationTarget(input: JSON!): WebhookNotificationTarget
+  addSubscriptionsToNotificationTarget(input: AddSubscriptionsToNotificationTargetInput!): WebhookNotificationTarget
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

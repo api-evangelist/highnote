@@ -1,0 +1,260 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Highnote GraphQL API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{base64ApiKey}}",
+      "password": ""
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Core",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Ping (health check)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.us.highnote.com/graphql",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query { ping }\"}"
+            }
+          },
+          "docs": "GraphQL health check."
+        },
+        {
+          "info": {
+            "name": "Node by global ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.us.highnote.com/graphql",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query GetNode($id: ID!) { node(id: $id) { id __typename } }\",\"variables\":{\"id\":\"REPLACE_WITH_GLOBAL_ID\"}}"
+            }
+          },
+          "docs": "Look up any object by its global Relay ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Card Issuing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List card products",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.us.highnote.com/graphql",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query { cardProducts(first: 10) { edges { node { id name type status } } pageInfo { hasNextPage endCursor } } }\"}"
+            }
+          },
+          "docs": "List card products with Relay cursor pagination."
+        },
+        {
+          "info": {
+            "name": "Issue payment card for application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.us.highnote.com/graphql",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation IssueCard($applicationId: ID!) { issuePaymentCardForApplication(input: { applicationId: $applicationId, formFactor: VIRTUAL }) { id bin last4 expirationDate network status } }\",\"variables\":{\"applicationId\":\"REPLACE_WITH_APPLICATION_ID\"}}"
+            }
+          },
+          "docs": "Issue a virtual payment card against an approved application."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Account Holders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create US person account holder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.us.highnote.com/graphql",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation CreatePerson($input: CreateUSPersonAccountHolderInput!) { createUSPersonAccountHolder(input: $input) { id name { givenName familyName } status } }\",\"variables\":{\"input\":{\"name\":{\"givenName\":\"Jane\",\"familyName\":\"Doe\"},\"email\":\"jane@example.com\"}}}"
+            }
+          },
+          "docs": "Onboard an individual account holder (KYC)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Financial Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Issue financial account for application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.us.highnote.com/graphql",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation IssueFinancialAccount($applicationId: ID!) { issueFinancialAccountForApplication(input: { applicationId: $applicationId }) { id status } }\",\"variables\":{\"applicationId\":\"REPLACE_WITH_APPLICATION_ID\"}}"
+            }
+          },
+          "docs": "Issue a financial account against an approved application."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List payment transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.us.highnote.com/graphql",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query { paymentTransactions(first: 25) { edges { node { id status approvedAmount { value currencyCode } merchantDetails { name category } } } } }\"}"
+            }
+          },
+          "docs": "Read recent payment transactions."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Transfers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Transfer between financial accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.us.highnote.com/graphql",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation Transfer($input: InitiateTransferInput!) { initiateTransferBetweenFinancialAccounts(input: $input) { id status amount { value currencyCode } } }\",\"variables\":{\"input\":{\"fromFinancialAccountId\":\"REPLACE_FROM\",\"toFinancialAccountId\":\"REPLACE_TO\",\"amount\":{\"value\":\"10.00\",\"currencyCode\":\"USD\"}}}}"
+            }
+          },
+          "docs": "Move funds between two financial accounts."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Collaborative Authorization",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add collaborative authorization endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.us.highnote.com/graphql",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation AddCollabAuth($input: AddCollaborativeAuthorizationEndpointInput!) { addCollaborativeAuthorizationEndpoint(input: $input) { id url status } }\",\"variables\":{\"input\":{\"url\":\"https://example.com/highnote/collab-auth\"}}}"
+            }
+          },
+          "docs": "Register a real-time authorization decisioning endpoint."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add webhook notification target",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.us.highnote.com/graphql",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation AddWebhook($input: AddWebhookNotificationTargetInput!) { addWebhookNotificationTarget(input: $input) { id url status } }\",\"variables\":{\"input\":{\"url\":\"https://example.com/highnote/webhooks\"}}}"
+            }
+          },
+          "docs": "Register an HTTPS webhook target for event delivery."
+        }
+      ]
+    }
+  ]
+}

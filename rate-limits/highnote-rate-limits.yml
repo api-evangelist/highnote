@@ -1,0 +1,53 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Highnote
+providerId: highnote
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- Card Issuing
+- Embedded Finance
+- Fintech
+- Payments
+- GraphQL
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  Highnote applies per-account rate limiting to the single GraphQL endpoint to
+  protect platform stability. The documentation describes rate limiting as a
+  resilience consideration and recommends idempotency keys and retry-with-backoff,
+  but does not publish specific numeric request-per-second or request-per-minute
+  thresholds. Specific limits are not reconciled in this artifact.
+notes: >-
+  Highnote does not publish exact numeric limits. Confirm per-account / per-program
+  GraphQL request limits and any per-mutation constraints with Highnote during
+  reconciliation. Use idempotency keys for all mutating operations.
+sources:
+- https://docs.highnote.com/docs/developers/api/using-the-api
+- https://docs.highnote.com/docs/developers/api/intro-to-graphql
+responseCodes:
+  throttled: 429
+limits:
+- name: GraphQL Requests
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: Per-account rate limiting on the single GraphQL endpoint; exact thresholds not published.
+- name: Mutating Operations
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: Use idempotency keys so retried mutations do not double-execute.
+policies:
+- name: Idempotency
+  description: Supply an idempotency key on mutations so safe retries do not duplicate side effects.
+- name: Backoff Strategy
+  description: Implement exponential backoff with jitter and honor 429 responses / Retry-After.
+- name: Pagination
+  description: Use Relay cursor connections (first / after) to page large result sets rather than large single requests.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

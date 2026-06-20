@@ -1,0 +1,113 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Highnote
+providerId: highnote
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- Card Issuing
+- Embedded Finance
+- Fintech
+- Payments
+- Credit
+- Plans
+description: >-
+  Highnote does not publish public, self-serve API pricing. Pricing is sales-led
+  and structured around each program: platforms earn revenue from interchange on
+  branded cards, fees on transaction processing and instant payouts, and interest
+  income on embedded credit programs, while Highnote charges program / platform and
+  per-transaction fees negotiated per agreement. There are no published Free /
+  Developer / Enterprise tiers; access begins in a test environment and live
+  programs require a signed agreement. Specific rates are not reconciled in this
+  artifact.
+notes: >-
+  Pricing is contract-based and not published. Confirm program fees, interchange
+  share, and per-transaction pricing directly with Highnote sales during
+  reconciliation.
+sources:
+- https://highnote.com
+- https://highnote.com/blog/embedded-finance-platform-for-vertical-saas-own-the-flow
+- https://docs.highnote.com
+plans:
+- id: highnote-test
+  name: Test Environment
+  type: free
+  description: >-
+    Free access to the Highnote test environment (api.us.test.highnote.com) for
+    building and validating an integration before going live. No card money moves.
+  entries:
+  - label: Test API Access
+    name: test_access
+    type: flat
+    metric: access
+    limit: -1
+    timeFrame: month
+    geo: us
+    unit: 1
+    price: $0
+    userMultiplied: false
+  elements:
+  - name: GraphQL API (test)
+  - name: Card Issuing (test)
+  - name: Webhooks (test)
+- id: highnote-program
+  name: Program (Sales-Led)
+  type: enterprise
+  description: >-
+    Live, production card program under a negotiated agreement. Commercials are
+    structured around interchange share, transaction processing fees, instant-payout
+    fees, embedded-credit interest income, and program / platform fees specific to the
+    program. Contact Highnote sales.
+  entries:
+  - label: Program Agreement
+    name: program_agreement
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: us
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  - label: Interchange Share
+    name: interchange_share
+    type: usage
+    metric: interchange
+    limit: -1
+    timeFrame: month
+    geo: us
+    unit: 1
+    price: program-specific revenue share
+    userMultiplied: false
+  - label: Transaction Processing
+    name: transaction_processing
+    type: usage
+    metric: transactions
+    limit: -1
+    timeFrame: month
+    geo: us
+    unit: 1
+    price: negotiated per-transaction fee
+    userMultiplied: false
+  - label: Instant Payouts
+    name: instant_payouts
+    type: usage
+    metric: payouts
+    limit: -1
+    timeFrame: month
+    geo: us
+    unit: 1
+    price: negotiated per-payout fee
+    userMultiplied: false
+  elements:
+  - name: Card Issuing (live)
+  - name: Acquiring
+  - name: Embedded Credit
+  - name: Real-time Ledger
+  - name: Transfers / Instant Payments
+  - name: Collaborative Authorization
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

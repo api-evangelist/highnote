@@ -1,0 +1,213 @@
+aid: highnote
+url: https://raw.githubusercontent.com/api-evangelist/highnote/refs/heads/main/apis.yml
+name: Highnote
+kind: company
+description: Highnote is a modern, unified embedded-finance platform for card issuing,
+  acquiring, credit, and real-time money movement, with a built-in ledger and program
+  management. The entire platform is driven by a single GraphQL API at
+  https://api.us.highnote.com/graphql, authenticated with a base64-encoded API key
+  over HTTP Basic auth, covering card products, account holders (persons and
+  businesses), financial accounts, payment cards, transactions/authorizations,
+  transfers, collaborative authorization, spend/velocity rules, and webhook
+  notifications.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Card Issuing
+- Embedded Finance
+- Fintech
+- Payments
+- GraphQL
+- Ledger
+- Credit
+created: '2026-06-20'
+modified: '2026-06-20'
+specificationVersion: '0.19'
+apis:
+- aid: highnote:card-issuing
+  name: Highnote Card Issuing API
+  tags:
+  - Card Products
+  - Payment Cards
+  - Virtual Cards
+  - Physical Cards
+  - GraphQL
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.highnote.com/docs/issuing/get-started-issuing/issuing-overview
+  baseURL: https://api.us.highnote.com/graphql
+  properties:
+  - url: https://docs.highnote.com/docs/issuing/get-started-issuing/issuing-overview
+    type: Documentation
+  - url: https://docs.highnote.com/docs/api-reference/mutation
+    type: APIReference
+  - url: graphql/highnote-graphql.md
+    type: GraphQL
+  - url: openapi/highnote-openapi.yml
+    type: OpenAPI
+  description: Create and configure card products (createCardProduct), issue virtual,
+    physical, and tokenized digital payment cards (issuePaymentCardForApplication,
+    createPhysicalCardGroupOrder), activate and close cards, push-provision to Apple
+    Pay / Google Pay, and attach spend and velocity rules. Driven through the single
+    GraphQL endpoint with Basic auth.
+- aid: highnote:account-holders
+  name: Highnote Account Holders API
+  tags:
+  - Account Holders
+  - KYC
+  - KYB
+  - Applications
+  - GraphQL
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.highnote.com/docs/api-reference/mutation
+  baseURL: https://api.us.highnote.com/graphql
+  properties:
+  - url: https://docs.highnote.com/docs/developers/api/using-the-api
+    type: Documentation
+  - url: https://docs.highnote.com/docs/api-reference/object
+    type: APIReference
+  - url: graphql/highnote-graphql.md
+    type: GraphQL
+  - url: openapi/highnote-openapi.yml
+    type: OpenAPI
+  description: Onboard US person and US business account holders (createUSPersonAccountHolder,
+    createUSBusinessAccountHolder), manage authorized users, submit and accept card
+    product applications (createAccountHolderCardProductApplication), run KYC/KYB and
+    identity-update flows, and query personAccountHolders / businessAccountHolders.
+- aid: highnote:financial-accounts
+  name: Highnote Financial Accounts API
+  tags:
+  - Financial Accounts
+  - Ledger
+  - Credit
+  - Balances
+  - GraphQL
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.highnote.com/docs/api-reference/object
+  baseURL: https://api.us.highnote.com/graphql
+  properties:
+  - url: https://docs.highnote.com/docs/developers/api/using-the-api
+    type: Documentation
+  - url: https://docs.highnote.com/docs/api-reference/object
+    type: APIReference
+  - url: graphql/highnote-graphql.md
+    type: GraphQL
+  - url: openapi/highnote-openapi.yml
+    type: OpenAPI
+  description: Issue financial accounts against approved applications
+    (issueFinancialAccountForApplication), assign payment cards to financial accounts,
+    manage credit limits and on-demand funding, and read balances and the real-time
+    ledger via the FinancialAccount object and its account relationships.
+- aid: highnote:transactions
+  name: Highnote Transactions API
+  tags:
+  - Authorizations
+  - Transactions
+  - Clearing
+  - Disputes
+  - GraphQL
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.highnote.com/docs/api-reference/query
+  baseURL: https://api.us.highnote.com/graphql
+  properties:
+  - url: https://docs.highnote.com/docs/acquiring/about-acquiring
+    type: Documentation
+  - url: https://docs.highnote.com/docs/api-reference/object
+    type: APIReference
+  - url: graphql/highnote-graphql.md
+    type: GraphQL
+  - url: openapi/highnote-openapi.yml
+    type: OpenAPI
+  description: Authorize, capture, charge, and cancel payment transactions
+    (authorizePaymentCard, capturePaymentTransaction, chargePaymentCard), handle
+    incremental and force captures, initiate cardholder transaction disputes, and
+    query paymentTransactions and transactionBatches with HQL search.
+- aid: highnote:transfers
+  name: Highnote Transfers API
+  tags:
+  - Transfers
+  - ACH
+  - Money Movement
+  - Instant Payments
+  - GraphQL
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.highnote.com/docs/api-reference/mutation
+  baseURL: https://api.us.highnote.com/graphql
+  properties:
+  - url: https://docs.highnote.com/docs/developers/api/using-the-api
+    type: Documentation
+  - url: https://docs.highnote.com/docs/api-reference/mutation
+    type: APIReference
+  - url: graphql/highnote-graphql.md
+    type: GraphQL
+  - url: openapi/highnote-openapi.yml
+    type: OpenAPI
+  description: Move funds between financial accounts and external bank accounts via
+    ACH, wire, and instant-payment rails (initiateTransferBetweenFinancialAccounts,
+    initiateAchTransfer, initiateUnifiedFundsTransfer), link external bank accounts
+    through Plaid/Finicity, and schedule one-time and recurring transfers.
+- aid: highnote:collaborative-authorization
+  name: Highnote Collaborative Authorization API
+  tags:
+  - Collaborative Authorization
+  - Real-time Decisioning
+  - Webhooks
+  - GraphQL
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.highnote.com/docs/api-reference/mutation
+  baseURL: https://api.us.highnote.com/graphql
+  properties:
+  - url: https://docs.highnote.com/docs/developers/api/using-the-api
+    type: Documentation
+  - url: https://docs.highnote.com/docs/api-reference/mutation
+    type: APIReference
+  - url: graphql/highnote-graphql.md
+    type: GraphQL
+  - url: openapi/highnote-openapi.yml
+    type: OpenAPI
+  description: Register and manage a collaborative-authorization endpoint
+    (addCollaborativeAuthorizationEndpoint, activateCollaborativeAuthorizationEndpoint)
+    so your service participates in real-time authorization decisions, returning
+    approve or decline responses on each card authorization within the network
+    timeout window.
+- aid: highnote:webhooks
+  name: Highnote Webhooks & Notifications API
+  tags:
+  - Webhooks
+  - Notifications
+  - Events
+  - Subscriptions
+  - GraphQL
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.highnote.com/docs/api-reference/mutation
+  baseURL: https://api.us.highnote.com/graphql
+  properties:
+  - url: https://docs.highnote.com/docs/developers/api/using-the-api
+    type: Documentation
+  - url: https://docs.highnote.com/docs/api-reference/mutation
+    type: APIReference
+  - url: graphql/highnote-graphql.md
+    type: GraphQL
+  - url: openapi/highnote-openapi.yml
+    type: OpenAPI
+  description: Register HTTPS webhook notification targets (addWebhookNotificationTarget),
+    activate and deactivate them, and subscribe to event types
+    (addSubscriptionsToNotificationTarget) so Highnote pushes account, card,
+    transaction, and transfer events to your systems. Events are also queryable via
+    notificationEvents.
+common:
+- type: GitHubOrganization
+  url: https://github.com/Highnote-Platform
+- type: LinkedIn
+  url: https://www.linkedin.com/company/highnote-platform
+- type: Website
+  url: https://highnote.com
+- type: Documentation
+  url: https://docs.highnote.com
+- type: Plans
+  url: plans/highnote-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/highnote-rate-limits.yml
+- type: FinOps
+  url: finops/highnote-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

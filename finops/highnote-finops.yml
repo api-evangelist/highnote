@@ -1,0 +1,116 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Highnote
+providerId: highnote
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- Card Issuing
+- Embedded Finance
+- Fintech
+- Payments
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Highnote spend and revenue. Highnote is a sales-led embedded-finance
+  platform: commercials are program-specific and combine interchange share, transaction
+  processing fees, instant-payout fees, embedded-credit interest income, and program /
+  platform fees. Because pricing is contract-based and not published, per-meter rates
+  are not reconciled here; the meters below describe the cost / revenue dimensions a
+  program owner should track.
+notes: >-
+  Rates are negotiated per agreement and not public. Verify program fees, interchange
+  share, and per-transaction pricing against the signed Highnote agreement during
+  reconciliation.
+sources:
+- https://highnote.com
+- https://docs.highnote.com
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Highnote
+serviceCategory: Financial Services
+billingModel:
+  pricingCategory: Contract-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Highnote Platform
+  ServiceCategory: Financial Services
+  ProviderName: Highnote
+  PublisherName: Highnote
+  InvoiceIssuerName: Highnote
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Contract-Based
+meters:
+- name: cards_issued
+  description: Payment cards issued (virtual / physical / digital), may carry per-card or fulfillment fees.
+  unit: cards
+  aggregation: sum
+  dimensions:
+  - program
+  - cardProduct
+  - formFactor
+- name: transactions_processed
+  description: Authorization / clearing events processed; negotiated per-transaction processing fee.
+  unit: transactions
+  aggregation: sum
+  dimensions:
+  - program
+  - cardProduct
+- name: interchange_revenue
+  description: Interchange earned on branded card transactions; shared per agreement.
+  unit: usd
+  aggregation: sum
+  dimensions:
+  - program
+  - cardProduct
+- name: instant_payouts
+  description: Instant / push-to-card payouts; negotiated per-payout fee.
+  unit: payouts
+  aggregation: sum
+  dimensions:
+  - program
+- name: ach_transfers
+  description: ACH and unified funds transfers initiated.
+  unit: transfers
+  aggregation: sum
+  dimensions:
+  - program
+- name: credit_interest
+  description: Interest income on embedded credit programs.
+  unit: usd
+  aggregation: sum
+  dimensions:
+  - program
+  - cardProduct
+- name: program_platform_fees
+  description: Program / platform fees charged by Highnote per agreement.
+  unit: usd
+  aggregation: sum
+  dimensions:
+  - program
+principles:
+- name: Visibility
+  description: Pull Highnote reports (initiateOrganizationReport) and notification events to track issuance, transactions, transfers, and interchange per program.
+- name: Allocation
+  description: Tag financial accounts, card products, and API keys to programs / cost centers; use user-defined fields and custom metadata.
+- name: Optimization
+  description: Tune spend and velocity rules to control authorization volume; choose card form factors and transfer rails by cost.
+- name: Accountability
+  description: Assign program owners; review interchange share, transaction fees, and platform fees monthly against the agreement.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,210 @@
+{
+  "info": {
+    "name": "Highnote GraphQL API",
+    "description": "Highnote embedded-finance platform - single GraphQL endpoint (https://api.us.highnote.com/graphql). HTTP Basic auth with a base64-encoded API key as the username (empty password).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      { "key": "username", "value": "{{base64ApiKey}}", "type": "string" },
+      { "key": "password", "value": "", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.us.highnote.com/graphql" },
+    { "key": "base64ApiKey", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Core",
+      "item": [
+        {
+          "name": "Ping (health check)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"query\":\"query { ping }\"}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Node by global ID",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"query\":\"query GetNode($id: ID!) { node(id: $id) { id __typename } }\",\"variables\":{\"id\":\"REPLACE_WITH_GLOBAL_ID\"}}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Card Issuing",
+      "item": [
+        {
+          "name": "List card products",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"query\":\"query { cardProducts(first: 10) { edges { node { id name type status } } pageInfo { hasNextPage endCursor } } }\"}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Issue payment card for application",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"query\":\"mutation IssueCard($applicationId: ID!) { issuePaymentCardForApplication(input: { applicationId: $applicationId, formFactor: VIRTUAL }) { id bin last4 expirationDate network status } }\",\"variables\":{\"applicationId\":\"REPLACE_WITH_APPLICATION_ID\"}}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Account Holders",
+      "item": [
+        {
+          "name": "Create US person account holder",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"query\":\"mutation CreatePerson($input: CreateUSPersonAccountHolderInput!) { createUSPersonAccountHolder(input: $input) { id name { givenName familyName } status } }\",\"variables\":{\"input\":{\"name\":{\"givenName\":\"Jane\",\"familyName\":\"Doe\"},\"email\":\"jane@example.com\"}}}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Financial Accounts",
+      "item": [
+        {
+          "name": "Issue financial account for application",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"query\":\"mutation IssueFinancialAccount($applicationId: ID!) { issueFinancialAccountForApplication(input: { applicationId: $applicationId }) { id status } }\",\"variables\":{\"applicationId\":\"REPLACE_WITH_APPLICATION_ID\"}}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transactions",
+      "item": [
+        {
+          "name": "List payment transactions",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"query\":\"query { paymentTransactions(first: 25) { edges { node { id status approvedAmount { value currencyCode } merchantDetails { name category } } } } }\"}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transfers",
+      "item": [
+        {
+          "name": "Transfer between financial accounts",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"query\":\"mutation Transfer($input: InitiateTransferInput!) { initiateTransferBetweenFinancialAccounts(input: $input) { id status amount { value currencyCode } } }\",\"variables\":{\"input\":{\"fromFinancialAccountId\":\"REPLACE_FROM\",\"toFinancialAccountId\":\"REPLACE_TO\",\"amount\":{\"value\":\"10.00\",\"currencyCode\":\"USD\"}}}}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Collaborative Authorization",
+      "item": [
+        {
+          "name": "Add collaborative authorization endpoint",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"query\":\"mutation AddCollabAuth($input: AddCollaborativeAuthorizationEndpointInput!) { addCollaborativeAuthorizationEndpoint(input: $input) { id url status } }\",\"variables\":{\"input\":{\"url\":\"https://example.com/highnote/collab-auth\"}}}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Webhooks",
+      "item": [
+        {
+          "name": "Add webhook notification target",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"query\":\"mutation AddWebhook($input: AddWebhookNotificationTargetInput!) { addWebhookNotificationTarget(input: $input) { id url status } }\",\"variables\":{\"input\":{\"url\":\"https://example.com/highnote/webhooks\"}}}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

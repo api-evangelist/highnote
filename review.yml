@@ -1,0 +1,84 @@
+aid: highnote
+name: Highnote
+review:
+  question: Does Highnote expose a documented public WebSocket or GraphQL subscription API?
+  answer: false
+  date: '2026-06-20'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was created. Highnote does not document a public
+    WebSocket (ws:// / wss://) endpoint, nor a public GraphQL subscription
+    surface, nor HTTP Server-Sent Events (SSE). The Highnote platform is a
+    single synchronous GraphQL-over-HTTP endpoint. Asynchronous / realtime
+    delivery is handled out-of-band via outbound webhook notification
+    targets (Highnote POSTs events to a customer-hosted HTTPS URL) and, for
+    authorization decisioning, a collaborative authorization endpoint that
+    Highnote calls synchronously during each authorization. Neither is a
+    client-subscribed streaming transport, so no AsyncAPI was modeled.
+findings:
+  summary: |
+    Highnote exposes a single GraphQL endpoint at
+    https://api.us.highnote.com/graphql (test: https://api.us.test.highnote.com/graphql),
+    authenticated with HTTP Basic auth using a base64-encoded API key as the
+    username. All operations (queries and mutations) are POST requests with a
+    JSON body containing query / variables. There is no documented REST
+    surface, no GraphQL subscription type, and no WebSocket endpoint. Realtime
+    eventing is delivered via outbound webhooks (addWebhookNotificationTarget +
+    addSubscriptionsToNotificationTarget) and the collaborative authorization
+    endpoint (addCollaborativeAuthorizationEndpoint), both of which are Highnote
+    calling the customer's HTTPS server rather than the customer subscribing to
+    a stream.
+  transports:
+    - protocol: GraphQL over HTTP
+      scheme: https
+      baseURL: https://api.us.highnote.com/graphql
+      documented: true
+    - protocol: Webhook (outbound HTTPS POST)
+      scheme: https
+      note: Highnote POSTs notification events to a customer-registered HTTPS target. Outbound push, not a client subscription.
+      documented: true
+    - protocol: Collaborative Authorization (outbound HTTPS POST)
+      scheme: https
+      note: Highnote synchronously calls a customer endpoint during card authorization to collect an approve/decline decision.
+      documented: true
+    - protocol: GraphQL Subscriptions
+      scheme: wss
+      documented: false
+      note: No subscription type is documented on the Highnote GraphQL schema.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in the Highnote API reference.
+  graphqlConfirmed:
+    - POST https://api.us.highnote.com/graphql (live)
+    - POST https://api.us.test.highnote.com/graphql (test)
+    - Auth - HTTP Basic, base64-encoded API key as username, empty password
+    - Pagination - Relay cursor connections (first / after)
+    - Features - idempotency keys, HQL search, custom metadata / user-defined fields, rate limiting
+sources:
+  - url: https://docs.highnote.com/docs/developers/api/using-the-api
+    type: Documentation
+    note: Confirms single GraphQL endpoint, Basic auth with base64-encoded API key, POST + application/json.
+  - url: https://docs.highnote.com/docs/developers/api/intro-to-graphql
+    type: Documentation
+    note: Single endpoint, Relay cursor connections, ping query, node lookup.
+  - url: https://docs.highnote.com/docs/api-reference/mutation
+    type: APIReference
+    note: Lists mutations including webhook notification targets and collaborative authorization endpoint; no subscriptions.
+  - url: https://docs.highnote.com/docs/api-reference/query
+    type: APIReference
+    note: Lists top-level query fields; no subscription type present.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket or subscription protocol surface exists. Realtime delivery is
+    outbound webhook push and a synchronous collaborative-authorization
+    callback, neither of which is a client-subscribed stream, so no AsyncAPI
+    document was authored. The GraphQL surface is modeled in
+    graphql/highnote-graphql.md and graphql/highnote-schema.graphql, and the
+    GraphQL-over-HTTP endpoint is modeled in openapi/highnote-openapi.yml.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
