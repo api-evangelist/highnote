@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/highnote-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: 'HTTP Basic auth. The base64-encoded API key is supplied as the username and
+    the password is left empty. Equivalent to sending `Authorization: Basic <base64(apiKey)>`.'
+  sources:
+  - openapi/highnote-openapi.yml

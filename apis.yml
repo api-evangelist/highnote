@@ -194,6 +194,10 @@ apis:
     transaction, and transfer events to your systems. Events are also queryable via
     notificationEvents.
 common:
+- type: DomainSecurity
+  url: security/highnote-domain-security.yml
+- type: Authentication
+  url: authentication/highnote-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/Highnote-Platform
 - type: LinkedIn
