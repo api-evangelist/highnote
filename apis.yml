@@ -194,6 +194,8 @@ apis:
     transaction, and transfer events to your systems. Events are also queryable via
     notificationEvents.
 common:
+- type: AgenticAccess
+  url: agentic-access/highnote-agentic-access.yml
 - type: DomainSecurity
   url: security/highnote-domain-security.yml
 - type: Authentication
