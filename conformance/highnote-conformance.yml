@@ -1,0 +1,34 @@
+generated: '2026-07-23'
+method: searched
+source: https://docs.highnote.com/docs/get-started/introduction/pci-dss-compliance
+standards:
+  - id: pci-dss
+    conforms: true
+    evidence: >-
+      Highnote is a PCI DSS validated service provider; its tokenization SDKs (Secure Inputs,
+      Checkout) let subscribers reduce PCI scope to SAQ-A because PCI data never crosses the
+      subscriber's server. Docs cover SAQ-A vs SAQ-D, AOC, and ROC/QSA requirements.
+    docs: https://docs.highnote.com/docs/get-started/introduction/pci-dss-compliance
+  - id: oauth2
+    conforms: false
+    evidence: Auth is HTTP Basic with a base64-encoded API key; no OAuth2 securityScheme.
+  - id: openid-connect
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use the GraphQL errors-as-data pattern (UserError + errors array), not application/problem+json.
+  - id: graphql-cursor-connections
+    conforms: true
+    evidence: Relay Cursor Connections pagination (edges/node/pageInfo, first/after) across all list queries.
+  - id: idempotency
+    conforms: true
+    evidence: IdempotencyKey (v4 UUID) input field supported on all mutations.
+  - id: relay-global-object-identification
+    conforms: true
+    evidence: Node interface + node(id) query; prefixed global object IDs with __typename.
+  - id: 3d-secure
+    conforms: true
+    evidence: 3DS verification supported for Visa and Mastercard acquiring/issuing flows.
+notes: >-
+  PCI DSS is the published compliance program (payments/card data). No SOC 2 or ISO 27001
+  attestation is documented in the public developer docs, so those are not asserted here.

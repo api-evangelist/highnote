@@ -1,14 +1,26 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/highnote-openapi.yml
+generated: '2026-07-23'
+method: searched
+source: openapi/highnote-graphql-api-openapi.yml
+docs: https://docs.highnote.com/docs/developers/api/using-the-api
 summary:
   types:
   - http
+  api_key_in: [header]
+  oauth2_flows: []
 schemes:
 - name: basicAuth
   type: http
   scheme: basic
-  description: 'HTTP Basic auth. The base64-encoded API key is supplied as the username and
-    the password is left empty. Equivalent to sending `Authorization: Basic <base64(apiKey)>`.'
+  description: >-
+    HTTP Basic auth. Generate an API key in the Highnote Dashboard, base64-encode the ASCII key,
+    and send it as the HTTP Basic username with an empty password — equivalent to
+    `Authorization: Basic <base64(apiKey)>`. Keys are environment-scoped (Test vs Live) and
+    rotatable in the Dashboard. There is no OAuth/OIDC flow.
+  key_management:
+    rotation_docs: https://docs.highnote.com/docs/developers/api/rotating-keys
+    environments: [test, live]
   sources:
-  - openapi/highnote-openapi.yml
+  - openapi/highnote-graphql-api-openapi.yml
+client_side_auth:
+  detail: Browser/embedded SDK components authenticate with short-lived client tokens minted server-side.
+  docs: https://docs.highnote.com/docs/developers/sdks/client-tokens

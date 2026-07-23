@@ -1,0 +1,70 @@
+generated: '2026-07-23'
+method: derived
+source: mcp/highnote-mcp.yml + graphql/highnote-schema.graphql + openapi/highnote-graphql-api-openapi.yml
+description: >-
+  Crosswalk binding the derived MCP candidate tools to their backing surfaces. Highnote is
+  GraphQL-native: the entire platform is a single POST /graphql operation (OpenAPI operationId
+  postGraphql), so there is NO per-resource REST operation to bind to. Each MCP tool's real input
+  schema comes from a GraphQL field's Input type, not from a distinct REST operationId. Every tool
+  is therefore graphql-backed and, at the REST/OpenAPI layer, maps only to the generic postGraphql
+  transport operation. Recorded honestly rather than inventing REST operationIds that do not exist.
+surfaces:
+  openapi:
+    file: openapi/highnote-graphql-api-openapi.yml
+    operations: [postGraphql]
+    note: Single generic GraphQL-over-HTTP transport operation; not resource-oriented.
+  graphql:
+    endpoint: https://api.us.highnote.com/graphql
+    schema: graphql/highnote-schema.graphql
+    introspection: gated (HTTP Basic API key required; live introspection not run anonymously)
+  mcp:
+    url: null
+    note: No published hosted MCP server; tool list is derived (candidate).
+crosswalk:
+  - tool: authorize_payment_card
+    category: acquiring
+    rest: [postGraphql]
+    binding: graphql
+    confidence: high
+    note: Backed by GraphQL Mutation.authorizePaymentCard (AuthorizePaymentCardInput); no dedicated REST op.
+  - tool: charge_payment_card
+    category: acquiring
+    rest: [postGraphql]
+    binding: graphql
+    confidence: high
+    note: GraphQL Mutation.chargePaymentCard (ChargePaymentCardInput).
+  - tool: issue_payment_card
+    category: issuing
+    rest: [postGraphql]
+    binding: graphql
+    confidence: high
+    note: GraphQL Mutation.issuePaymentCardForApplication (IssuePaymentCardForApplicationInput).
+  - tool: initiate_ach_transfer
+    category: money-movement
+    rest: [postGraphql]
+    binding: graphql
+    confidence: high
+    note: GraphQL Mutation.initiateAchTransfer (InitiateAchTransferInput).
+mcp_only:
+  - tool: list_card_products
+    reason: GraphQL Query.cardProducts — read surface exists only in GraphQL; no REST projection.
+  - tool: list_payment_transactions
+    reason: GraphQL Query.paymentTransactions (HQL + Relay pagination) — GraphQL-only.
+  - tool: create_us_person_account_holder
+    reason: GraphQL Mutation.createUSPersonAccountHolder — GraphQL-only.
+  - tool: create_us_business_account_holder
+    reason: GraphQL Mutation.createUSBusinessAccountHolder — GraphQL-only.
+  - tool: add_collaborative_authorization_endpoint
+    reason: GraphQL Mutation.addCollaborativeAuthorizationEndpoint — GraphQL-only.
+rest_only:
+  - capability: none
+    note: No resource-oriented REST operations exist; the only OpenAPI op (postGraphql) is the GraphQL transport itself.
+coverage:
+  tools_named: 20
+  tools_bound_graphql: 20
+  mcp_only: 20
+  rest_ops_total: 1
+  rest_ops_with_tool: 1
+  note: >-
+    Every tool binds to a GraphQL field; all 20 are "mcp_only" at the REST layer because Highnote
+    publishes no resource-oriented REST API. This is a real surface characteristic, not a gap.

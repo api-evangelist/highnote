@@ -1,0 +1,44 @@
+generated: '2026-07-23'
+method: searched
+source: https://docs.highnote.com/docs/developers/api/testing-the-api
+description: >-
+  Highnote provides a full Test environment that replicates Live functionality, plus GraphQL
+  simulate* mutations to drive card transaction lifecycles, and 3DS/decline triggers.
+environments:
+  test:
+    graphql_endpoint: https://api.us.test.highnote.com/graphql
+    dashboard: https://dashboard.highnote.com
+    api_explorer: https://highnote.com/explorer
+    detail: Replicates the full functionality of Live; requires a Test-mode API key generated in the Dashboard.
+  live:
+    graphql_endpoint: https://api.us.highnote.com/graphql
+key_separation:
+  detail: >-
+    API keys are scoped to Test or Live mode and generated per environment in the Highnote
+    Dashboard; switch modes in the Dashboard. Do not enter production data in the Test environment.
+simulation_mutations:
+  - name: simulateAuthorization
+    purpose: Simulate a card authorization.
+  - name: simulateClearing
+    purpose: Simulate clearing of an authorization.
+  - name: simulateSingleStepAuthAndClear
+    purpose: Simulate a combined single-message auth + clear.
+  - name: simulateReversal
+    purpose: Reverse an authorization that has not cleared (full or partial).
+  - name: simulateRefund
+    purpose: Refund a cleared transaction (full or partial).
+  - name: simulateAdjustment
+    purpose: Simulate a transaction adjustment.
+decline_and_3ds_triggers:
+  - {network: visa, field: cavvResultCode, value: FAILED, result: INVALID_3DS_VERIFICATION decline}
+  - {network: mastercard, field: aavResultCode, value: AAV_FAILED_VALIDATION, result: INVALID_3DS_VERIFICATION decline}
+related_simulations:
+  - {name: sim-fleet-transactions, docs: https://docs.highnote.com/docs/issuing/transactions/sim-fleet-transactions}
+  - {name: sim-collaborative-authorization, docs: https://docs.highnote.com/docs/issuing/spend-controls/sim-collaborative-authorization}
+  - {name: sim-underwriting-decisions, docs: https://docs.highnote.com/docs/issuing/credit/simulations/sim-underwriting-decisions}
+test_values:
+  published_cards: none
+  detail: >-
+    Highnote does not publish fixed magic test PAN/BIN values or magic amounts; simulations
+    reference real resources you create in Test (financial accounts, payment cards, card IDs).
+docs: https://docs.highnote.com/docs/developers/api/testing-the-api

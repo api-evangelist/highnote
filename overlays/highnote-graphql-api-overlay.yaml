@@ -1,0 +1,36 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Highnote GraphQL API
+  version: 1.0.0
+extends: openapi/highnote-graphql-api-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-07-23'
+      x-api-style: graphql-over-http
+      x-graphql-schema: graphql/highnote-schema.graphql
+      x-idempotency:
+        supported: true
+        field: IdempotencyKey
+        format: uuid-v4
+        scope: all-mutations
+      x-pagination:
+        style: relay-cursor
+      x-artifacts:
+        conventions: conventions/highnote-conventions.yml
+        errors: errors/highnote-problem-types.yml
+        decline_codes: errors/highnote-decline-codes.yml
+        lifecycle: lifecycle/highnote-lifecycle.yml
+        sandbox: sandbox/highnote-sandbox.yml
+        webhooks: asyncapi/highnote-events-asyncapi.yml
+        data_model: data-model/highnote-data-model.yml
+        packages: packages/highnote-packages.yml
+        conformance: conformance/highnote-conformance.yml
+  - target: $.paths['/graphql'].post
+    update:
+      x-rate-limit:
+        model: request-count + request-complexity
+        response: 429
+      x-compliance:
+        pci_dss: true
+        pci_scope_reduction: SAQ-A via tokenization SDKs

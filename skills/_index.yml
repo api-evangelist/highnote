@@ -1,0 +1,24 @@
+generated: '2026-07-23'
+method: generated
+source: graphql/highnote-schema.graphql + conventions/highnote-conventions.yml
+note: >-
+  Packaged agent skills for Highnote's single GraphQL endpoint. Every step is grounded in a real
+  GraphQL query/mutation present in graphql/highnote-schema.graphql. No provider-published
+  AGENTS.md/skill files were found; these are generated from the schema and captured conventions.
+skills:
+  - file: highnote-issue-a-card.md
+    name: Onboard an account holder and issue a payment card
+    api: openapi/highnote-graphql-api-openapi.yml
+    operations: [createUSPersonAccountHolder, createAccountHolderCardProductApplication, issueFinancialAccountForApplication, issuePaymentCardForApplication, activatePaymentCard]
+  - file: highnote-accept-a-payment.md
+    name: Accept and capture an acquiring card payment
+    api: openapi/highnote-graphql-api-openapi.yml
+    operations: [authorizePaymentCard, capturePaymentTransaction, chargePaymentCard]
+  - file: highnote-move-money.md
+    name: Move funds across rails
+    api: openapi/highnote-graphql-api-openapi.yml
+    operations: [initiateTransferBetweenFinancialAccounts, initiateAchTransfer, initiateUnifiedFundsTransfer]
+  - file: highnote-subscribe-to-events.md
+    name: Register a webhook target and subscribe to events
+    api: openapi/highnote-graphql-api-openapi.yml
+    operations: [addWebhookNotificationTarget, activateNotificationTarget, addSubscriptionsToNotificationTarget]

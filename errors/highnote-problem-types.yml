@@ -1,0 +1,43 @@
+generated: '2026-07-23'
+method: searched
+source: https://docs.highnote.com/docs/developers/api/error-handling
+format: graphql-errors
+description: >-
+  Highnote is GraphQL-native and does not use RFC 9457 problem+json. Errors surface two ways:
+  (1) transport/query errors as a top-level GraphQL `errors` array; (2) validation/business
+  errors as data via a `UserError` type inside mutation response unions ("errors as data").
+error_envelope:
+  transport_errors:
+    location: top-level errors[]
+    fields: [message, locations, errorPath]
+    http_status: 400 (invalid query) / 200 (GraphQL-over-HTTP with errors) / 401 (bad auth) / 429 (rate limited)
+  business_errors:
+    pattern: errors-as-data
+    type: UserError
+    location: mutation response union member
+    detail: Validation and business-logic failures are returned as a UserError data node rather than throwing.
+  request_id:
+    field: requestId
+    location: response extensions.requestId
+    detail: Unique per-request identifier; supply to Highnote support for troubleshooting.
+problems:
+  - kind: transport
+    http_status: 400
+    title: Invalid query
+    detail: Malformed or invalid GraphQL query; returns errors[] with message, locations, errorPath.
+  - kind: auth
+    http_status: 401
+    title: Unauthorized
+    detail: Missing or invalid API key (HTTP Basic).
+    source_operation: openapi/highnote-graphql-api-openapi.yml#postGraphql
+  - kind: rate-limit
+    http_status: 429
+    title: Too Many Requests
+    detail: Request-count or request-complexity limit exceeded; back off and retry.
+    source_operation: openapi/highnote-graphql-api-openapi.yml#postGraphql
+  - kind: business
+    http_status: 200
+    title: UserError
+    detail: Validation/business error returned as data in a mutation response union member.
+related:
+  decline_and_denial_codes: errors/highnote-decline-codes.yml

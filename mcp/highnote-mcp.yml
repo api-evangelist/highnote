@@ -1,0 +1,78 @@
+generated: '2026-07-23'
+method: derived
+status: candidate
+source: graphql/highnote-schema.graphql
+description: >-
+  No official Highnote-hosted MCP server was found (searched docs, npm @modelcontextprotocol,
+  and public MCP registries as of 2026-07-23). This is a DERIVED candidate tool list — one tool
+  per marquee GraphQL query/mutation on the single https://api.us.highnote.com/graphql endpoint —
+  provided as a starting point for an MCP wrapper. Each tool's real input contract is the backing
+  GraphQL field's Input type in graphql/highnote-schema.graphql. Auth is HTTP Basic with a
+  base64-encoded API key.
+server:
+  name: highnote
+  transport: http
+  url: null   # no published hosted MCP server
+  auth: http-basic (base64 API key)
+  backing_endpoint: https://api.us.highnote.com/graphql
+tools:
+  - name: list_card_products
+    description: List card products in the program.
+    source_operation: graphql/highnote-schema.graphql#Query.cardProducts
+  - name: create_card_product
+    description: Create and configure a card product (debit, credit, prepaid, fleet, charge).
+    source_operation: graphql/highnote-schema.graphql#Mutation.createCardProduct
+  - name: create_us_person_account_holder
+    description: Onboard a US person account holder (KYC).
+    source_operation: graphql/highnote-schema.graphql#Mutation.createUSPersonAccountHolder
+  - name: create_us_business_account_holder
+    description: Onboard a US business account holder (KYB).
+    source_operation: graphql/highnote-schema.graphql#Mutation.createUSBusinessAccountHolder
+  - name: create_card_product_application
+    description: Submit an account holder application to a card product.
+    source_operation: graphql/highnote-schema.graphql#Mutation.createAccountHolderCardProductApplication
+  - name: issue_financial_account
+    description: Issue a financial account for an approved application.
+    source_operation: graphql/highnote-schema.graphql#Mutation.issueFinancialAccountForApplication
+  - name: issue_payment_card
+    description: Issue a virtual, physical, or tokenized payment card for an application.
+    source_operation: graphql/highnote-schema.graphql#Mutation.issuePaymentCardForApplication
+  - name: activate_payment_card
+    description: Activate an issued payment card.
+    source_operation: graphql/highnote-schema.graphql#Mutation.activatePaymentCard
+  - name: close_payment_card
+    description: Close a payment card.
+    source_operation: graphql/highnote-schema.graphql#Mutation.closePaymentCard
+  - name: authorize_payment_card
+    description: Authorize an acquiring card payment.
+    source_operation: graphql/highnote-schema.graphql#Mutation.authorizePaymentCard
+  - name: capture_payment_transaction
+    description: Capture a previously authorized payment transaction.
+    source_operation: graphql/highnote-schema.graphql#Mutation.capturePaymentTransaction
+  - name: charge_payment_card
+    description: Single-step charge (auth + capture) a payment card.
+    source_operation: graphql/highnote-schema.graphql#Mutation.chargePaymentCard
+  - name: list_payment_transactions
+    description: Query payment transactions with HQL search and Relay cursor pagination.
+    source_operation: graphql/highnote-schema.graphql#Query.paymentTransactions
+  - name: initiate_customer_card_transaction_dispute
+    description: Initiate a cardholder transaction dispute.
+    source_operation: graphql/highnote-schema.graphql#Mutation.initiateCustomerCardTransactionDispute
+  - name: initiate_transfer_between_financial_accounts
+    description: Move funds between two Highnote financial accounts (on-us, instant).
+    source_operation: graphql/highnote-schema.graphql#Mutation.initiateTransferBetweenFinancialAccounts
+  - name: initiate_ach_transfer
+    description: Initiate a standard or same-day ACH transfer.
+    source_operation: graphql/highnote-schema.graphql#Mutation.initiateAchTransfer
+  - name: initiate_unified_funds_transfer
+    description: Move funds over the best rail (ACH, wire, RTP, push-to-card).
+    source_operation: graphql/highnote-schema.graphql#Mutation.initiateUnifiedFundsTransfer
+  - name: add_collaborative_authorization_endpoint
+    description: Register a collaborative-authorization endpoint for real-time approve/decline.
+    source_operation: graphql/highnote-schema.graphql#Mutation.addCollaborativeAuthorizationEndpoint
+  - name: add_webhook_notification_target
+    description: Register an HTTPS webhook notification target.
+    source_operation: graphql/highnote-schema.graphql#Mutation.addWebhookNotificationTarget
+  - name: add_subscriptions_to_notification_target
+    description: Subscribe a notification target to event types.
+    source_operation: graphql/highnote-schema.graphql#Mutation.addSubscriptionsToNotificationTarget

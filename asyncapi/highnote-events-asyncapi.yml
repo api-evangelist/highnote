@@ -1,0 +1,138 @@
+asyncapi: 3.0.0
+info:
+  title: Highnote Event Notifications
+  version: '1.0'
+  description: >-
+    Highnote delivers event notifications to registered HTTPS webhook notification targets
+    (addWebhookNotificationTarget) via outbound POST. Subscribe a target to event types with
+    addSubscriptionsToNotificationTarget; delivered events are also queryable via the
+    notificationEvents GraphQL query. Events are retained for 30 days.
+    This AsyncAPI is GENERATED from the published Events Reference
+    (https://docs.highnote.com/docs/developers/events/events-reference) — Highnote does not
+    publish its own AsyncAPI document. x-generated-from records the source.
+  contact:
+    name: Highnote
+    url: https://docs.highnote.com/docs/developers/events/events-reference
+  x-generated: '2026-07-23'
+  x-method: generated
+  x-generated-from: https://docs.highnote.com/docs/developers/events/events-reference
+defaultContentType: application/json
+servers:
+  webhook:
+    host: your-registered-endpoint.example.com
+    protocol: https
+    description: Your registered HTTPS webhook notification target; Highnote POSTs event notifications to it.
+channels:
+  notifications:
+    address: /
+    description: Outbound webhook notification deliveries (HTTPS POST) to your registered target.
+    messages:
+      notificationEvent:
+        $ref: '#/components/messages/NotificationEvent'
+operations:
+  receiveNotification:
+    action: receive
+    channel:
+      $ref: '#/channels/notifications'
+    summary: Receive a Highnote event notification at your webhook target.
+components:
+  messages:
+    NotificationEvent:
+      name: NotificationEvent
+      title: Highnote notification event
+      contentType: application/json
+      summary: A single event notification delivered to your webhook target.
+      payload:
+        type: object
+        properties:
+          type:
+            type: string
+            description: The event notification type.
+            enum:
+              - ORIGINATED_ACH_TRANSFER_INITIATED
+              - ORIGINATED_ACH_TRANSFER_PENDING
+              - ORIGINATED_ACH_TRANSFER_PROCESSING
+              - ORIGINATED_ACH_TRANSFER_PROCESSED
+              - ORIGINATED_ACH_TRANSFER_FAILED
+              - ORIGINATED_ACH_TRANSFER_RETURNED
+              - ORIGINATED_ACH_TRANSFER_CANCELED
+              - NON_ORIGINATED_ACH_TRANSFER_RECEIVED
+              - NON_ORIGINATED_ACH_TRANSFER_PROCESSED
+              - NON_ORIGINATED_ACH_TRANSFER_FAILED
+              - NON_ORIGINATED_ACH_TRANSFER_RETURNED
+              - ACH_TRANSFER_HOLD_ADDED
+              - ACH_TRANSFER_HOLD_REMOVED
+              - CARD_PRODUCT_APPLICATION_APPROVED
+              - CARD_PRODUCT_APPLICATION_DENIED
+              - CARD_PRODUCT_APPLICATION_MANUAL_REVIEW
+              - CARD_PRODUCT_APPLICATION_CLOSED
+              - CARD_PRODUCT_APPLICATION_DOCUMENT_UPLOAD_REQUESTED
+              - CARD_PRODUCT_APPLICATION_IDENTITY_UPDATE_REQUESTED
+              - CARD_PAYMENT_AUTHORIZED_EVENT
+              - CARD_PAYMENT_AUTHORIZATION_DECLINED_EVENT
+              - CARD_PAYMENT_CAPTURING_EVENT
+              - CARD_PAYMENT_SETTLED_EVENT
+              - CARD_PAYMENT_CLEARED_EVENT
+              - CARD_PAYMENT_REVERSED_EVENT
+              - CARD_PAYMENT_DISPUTE_ACTION_REQUIRED
+              - PAYMENT_CARD_ISSUED
+              - PAYMENT_CARD_ACTIVATED
+              - PAYMENT_CARD_SUSPENDED
+              - PAYMENT_CARD_UNSUSPENDED
+              - PAYMENT_CARD_CLOSED
+              - PAYMENT_CARD_AUTHORIZATION_APPROVED
+              - PAYMENT_CARD_AUTHORIZATION_DECLINED
+              - PAYMENT_CARD_AUTHORIZATION_AND_CLEAR_APPROVED
+              - PAYMENT_CARD_AUTHORIZATION_AND_CLEAR_DECLINED
+              - PAYMENT_CARD_AUTHORIZATION_REVERSED
+              - PAYMENT_CARD_CLEARED
+              - PAYMENT_CARD_ADJUSTMENT
+              - CARD_DIGITAL_WALLET_TOKEN_ACTIVATED
+              - CARD_DIGITAL_WALLET_TOKEN_SUSPENDED
+              - CARD_DIGITAL_WALLET_TOKEN_TERMINATED
+              - INTERNAL_TRANSFER_BETWEEN_FINANCIAL_ACCOUNTS_PENDING
+              - INTERNAL_TRANSFER_BETWEEN_FINANCIAL_ACCOUNTS_COMPLETED
+              - INTERNAL_TRANSFER_BETWEEN_FINANCIAL_ACCOUNTS_FAILED
+              - ACCOUNT_STATUS_ACTIVE
+              - ACCOUNT_STATUS_SUSPENDED
+              - ACCOUNT_STATUS_UNDER_REVIEW
+              - ACCOUNT_STATUS_PENDING_CLOSURE
+              - ACCOUNT_STATUS_CLOSED
+              - FINANCIAL_ACCOUNT_STATEMENT_READY
+              - UPCOMING_STATEMENT_DUE_DATE
+              - PAYMENT_CARD_TRANSACTION_DISPUTE_CASE_STATUS_INITIATED
+              - PAYMENT_CARD_TRANSACTION_DISPUTE_PROVISIONAL_CREDIT_ISSUED
+              - PAYMENT_CARD_TRANSACTION_DISPUTE_CASE_STATUS_CASE_CARDHOLDER_WON
+              - PAYMENT_CARD_TRANSACTION_DISPUTE_CASE_STATUS_CASE_CARDHOLDER_LOST
+              - CREDIT_LIMIT_CHANGE_REQUEST_STATUS_CHANGED
+              - BALANCE_NOTIFICATION_EVENT
+              - FEE_CHARGE_EVENT
+              - FEE_REVERSAL_EVENT
+              - DOCUMENT_UPLOAD_REQUESTED_EVENT
+              - EXTERNAL_BANK_ACCOUNT_ADDED
+              - EXTERNAL_BANK_ACCOUNT_REMOVED
+              - NOTIFICATION_ACTIVATION
+              - NOTIFICATION_PING_TEST
+              - NOTIFICATION_EVENT_VALIDATION_TEST
+          id:
+            type: string
+            description: Notification event id (queryable via notificationEvents).
+        required: [type]
+x-webhook-catalog:
+  note: >-
+    The enum above is a representative subset of the full published event catalog. Full domains:
+    ACH transfers (originated/non-originated/holds), card product & authorized-user applications,
+    acquiring card payment lifecycle + disputes, chargebacks, check payments, credit limit,
+    crypto funding flow, digital wallet tokens, document upload, external bank accounts, fees,
+    financial account attributes/statements/status, identity documents & updates, instant network
+    transfer capabilities, internal transfers, notification system tests, and issuing payment card
+    status & transactions.
+  full_reference: https://docs.highnote.com/docs/developers/events/events-reference
+  retention_days: 30
+  delivery: outbound HTTPS POST to registered WebhookNotificationTarget
+  configuration_mutations:
+    - addWebhookNotificationTarget
+    - activateNotificationTarget
+    - deactivateNotificationTarget
+    - addSubscriptionsToNotificationTarget
+  query: notificationEvents

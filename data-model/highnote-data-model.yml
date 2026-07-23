@@ -1,0 +1,81 @@
+generated: '2026-07-23'
+method: derived
+source: graphql/highnote-schema.graphql
+description: >-
+  Entity-relationship graph derived from the Highnote GraphQL schema types, connection fields,
+  and id-reference inputs. Highnote is Relay-style: entities implement the Node interface and are
+  linked through *Connection fields and by id references in mutation inputs.
+entities:
+  - name: CardProduct
+    implements: [Node]
+    detail: Debit/credit/prepaid/fleet/charge product template that governs issued cards.
+  - name: AccountHolderCardProductApplication
+    implements: [Node]
+    detail: An account holder's application to a card product (gates issuing/credit/money movement).
+  - name: PersonAccountHolder
+    implements: [Node, AccountHolder]
+  - name: USBusinessAccountHolder
+    implements: [Node, AccountHolder]
+  - name: FinancialAccount
+    implements: [Node]
+    detail: Ledgered account (funding or payment-card account) with balances.
+  - name: PaymentCard
+    implements: [Node]
+    detail: Virtual/physical/tokenized card assigned to a financial account.
+  - name: PaymentTransaction
+    implements: [Node]
+    detail: Authorization/clearing/reversal/refund record against the ledger.
+  - name: FundsTransfer
+    implements: [Node]
+    detail: ACH/wire/RTP/push-to-card/internal transfer.
+  - name: CollaborativeAuthorizationEndpoint
+    implements: [Node]
+  - name: WebhookNotificationTarget
+    implements: [Node]
+  - name: NotificationEvent
+    implements: [Node]
+relationships:
+  - from: CardProduct
+    to: AccountHolderCardProductApplication
+    type: has_many
+    via: applications
+  - from: AccountHolderCardProductApplication
+    to: CardProduct
+    type: belongs_to
+    via: cardProductId (CreateAccountHolderCardProductApplicationInput)
+  - from: AccountHolderCardProductApplication
+    to: PersonAccountHolder
+    type: belongs_to
+    via: accountHolderId
+  - from: FinancialAccount
+    to: AccountHolderCardProductApplication
+    type: belongs_to
+    via: applicationId (IssueFinancialAccountForApplicationInput)
+  - from: FinancialAccount
+    to: PaymentCard
+    type: has_many
+    via: paymentCards
+  - from: PaymentCard
+    to: FinancialAccount
+    type: belongs_to
+    via: financialAccountId (AssignPaymentCardToFinancialAccountInput)
+  - from: PaymentTransaction
+    to: PaymentCard
+    type: belongs_to
+    via: paymentCardId (AuthorizePaymentCardInput / ChargePaymentCardInput)
+  - from: FundsTransfer
+    to: FinancialAccount
+    type: belongs_to
+    via: fromFinancialAccountId / toFinancialAccountId (InitiateTransferInput)
+  - from: WebhookNotificationTarget
+    to: NotificationEvent
+    type: has_many
+    via: subscriptions -> notificationEvents
+  - from: CollaborativeAuthorizationEndpoint
+    to: CardProduct
+    type: belongs_to
+    via: enableCollaborativeAuthorizationFeature(cardProductId)
+identity:
+  pattern: Relay global object identification
+  detail: Every entity implements Node; node(id) resolves any entity; object type read from __typename; IDs are prefixed opaque strings.
+  docs: https://docs.highnote.com/docs/developers/api/entity-ids-and-object-types

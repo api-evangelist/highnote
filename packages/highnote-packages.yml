@@ -1,0 +1,72 @@
+generated: '2026-07-23'
+method: searched
+source: https://docs.highnote.com/docs/developers/sdks/about-sdks
+packages:
+  - language: javascript
+    registry: npm
+    name: "@highnote-oss/nodejs-sdk"
+    url: https://www.npmjs.com/package/@highnote-oss/nodejs-sdk
+    install: npm install @highnote-oss/nodejs-sdk
+    version: 0.2.1
+    repository: https://github.com/highnote-oss/nodejs-sdk
+    official: true
+    kind: server
+    description: Official Highnote server SDK for Node.js — a resource-oriented wrapper over the Highnote GraphQL API.
+  - language: javascript
+    registry: npm
+    name: "@highnoteplatform/checkout"
+    url: https://www.npmjs.com/package/@highnoteplatform/checkout
+    install: npm install @highnoteplatform/checkout
+    version: 0.9.1
+    official: true
+    kind: client
+    description: Drop-in payment card checkout UI (acquiring); collects card data securely via iframe without PCI exposure.
+  - language: javascript
+    registry: npm
+    name: "@highnoteplatform/secure-inputs"
+    url: https://www.npmjs.com/package/@highnoteplatform/secure-inputs
+    install: npm install @highnoteplatform/secure-inputs
+    version: 1.8.1
+    official: true
+    kind: client
+    description: Secure input fields that tokenize card/PIN data via iframe (PCI SAQ-A scope reduction).
+  - language: javascript
+    registry: npm
+    name: "@highnoteplatform/card-viewer"
+    url: https://www.npmjs.com/package/@highnoteplatform/card-viewer
+    install: npm install @highnoteplatform/card-viewer
+    version: 1.5.0
+    official: true
+    kind: client
+    description: Render an issued payment card (PAN/CVV/expiry) securely in your UI.
+  - language: javascript
+    registry: npm
+    name: "@highnoteplatform/document-upload"
+    url: https://www.npmjs.com/package/@highnoteplatform/document-upload
+    install: npm install @highnoteplatform/document-upload
+    version: 1.1.5
+    official: true
+    kind: client
+    description: Document upload component for KYC/KYB required-document collection.
+  - language: javascript
+    registry: npm
+    name: "@highnoteplatform/risk-application"
+    url: https://www.npmjs.com/package/@highnoteplatform/risk-application
+    install: npm install @highnoteplatform/risk-application
+    version: 1.1.2
+    official: true
+    kind: client
+    description: Risk application SDK for early fraud detection during onboarding.
+  - language: javascript
+    registry: npm
+    name: "@highnoteplatform/protocol"
+    url: https://www.npmjs.com/package/@highnoteplatform/protocol
+    install: npm install @highnoteplatform/protocol
+    official: true
+    kind: client
+    description: Typed message protocol for Highnote SDK-to-iframe communication (shared dependency).
+notes: >-
+  Highnote ships one official server SDK (Node.js, @highnote-oss) plus a family of first-party
+  client-side embeddable SDKs under the @highnoteplatform npm scope. No official Python, Java,
+  Go, Ruby, or .NET server SDK is published; server integrations call the GraphQL endpoint
+  directly or via the Node.js SDK.

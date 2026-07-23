@@ -1,0 +1,33 @@
+generated: '2026-07-23'
+method: searched
+source: https://docs.highnote.com/docs/developers/api/status-changes
+versioning:
+  scheme: continuous-schema-evolution
+  current: v1 (single unversioned GraphQL endpoint)
+  detail: >-
+    No URL or header version. The GraphQL schema evolves continuously; schema changes are
+    classified by criticality (NON_BREAKING, DANGEROUS, BREAKING) and are queryable via the
+    schemaChangelogs GraphQL query (changeType + criticality + message).
+  docs: https://docs.highnote.com/docs/developers/api/status-changes
+deprecation:
+  policy: true
+  advance_notice_days: 90
+  detail: >-
+    Highnote provides 90 days advance notice before implementing breaking changes — defined as
+    modifications to notifications and/or the API schema that alter existing behavior in a way
+    that may break existing client integrations. Additive (non-breaking) changes are logged in
+    the API changelog and communicated directly only when they impact business/UX.
+  mechanism: 'schemaChangelogs query (criticality: BREAKING) + direct notice'
+  docs: https://docs.highnote.com/docs/developers/api/status-changes
+sla:
+  url: https://status.highnote.com
+  detail: Operational status and incident subscriptions published on the status page.
+status_page: https://status.highnote.com
+changelog:
+  mechanism: schemaChangelogs GraphQL query
+  see: changelog/highnote-changelog.yml
+deprecated_operations: []
+notes: >-
+  Deprecations surface as @deprecated schema markers / BREAKING criticality entries in
+  schemaChangelogs rather than a dated release-notes page. SchemaChangelog covers GraphQL schema
+  changes only; Dashboard/UI changes are excluded.

@@ -1,0 +1,48 @@
+generated: '2026-07-23'
+method: searched
+source: https://docs.highnote.com/docs/issuing/accounts/onboarding/application-denials
+description: >-
+  Highnote issuing/acquiring denial and decline reasons. Card authorizations can be declined by
+  network/issuer response, spend rules, velocity controls, account suspension/delinquency, and
+  collaborative-authorization endpoint decisions. Card product applications are denied via the
+  ApplicationDenialReason enum, with credit applications carrying more specific AdverseActionCode
+  values. Test-environment declines can be triggered via the simulate* mutations.
+application_denial:
+  field: applicationDenialReason
+  enum: ApplicationDenialReason
+  appears_on: [AccountHolderCardProductApplication, AuthorizedUserCardProductApplication]
+  codes:
+    - code: DENIED_DUE_TO_APPLICATION_INACTIVITY
+      meaning: Application could not be decisioned within the cardholder-agreement timeframe because required information was missing.
+    - code: DENIED_DUE_TO_OTHER
+      meaning: Application was denied for another (unspecified) reason.
+adverse_action:
+  field: adverseActionReasons
+  enum: AdverseActionCode
+  appears_on: underwritten (credit) applications
+  detail: More specific reasons for credit application denials (e.g. UNABLE_TO_VERIFY_CREDIT_REFERENCES). Full list published under Simulate Underwriting Decisions.
+  reference: https://docs.highnote.com/docs/issuing/credit/simulations/sim-underwriting-decisions
+authorization_declines:
+  detail: >-
+    Card authorization declines are driven by spend rules (15+ rule types: amount limits, MCC
+    restrictions, CVV requirements, merchant-country controls), velocity controls, account
+    suspension/delinquency, insufficient/over-limit balance (unless a variance rule applies), and
+    real-time collaborative-authorization endpoint declines.
+  events:
+    - PAYMENT_CARD_AUTHORIZATION_DECLINED
+    - PAYMENT_CARD_AUTHORIZATION_AND_CLEAR_DECLINED
+    - CARD_PAYMENT_AUTHORIZATION_DECLINED_EVENT
+  docs:
+    - https://docs.highnote.com/docs/issuing/spend-controls/spend-rules
+    - https://docs.highnote.com/docs/issuing/spend-controls/velocity-controls
+    - https://docs.highnote.com/docs/issuing/spend-controls/collaborative-authorization
+verification_declines:
+  detail: 3D Secure verification failures produce declines; simulate in Test.
+  simulated_triggers:
+    - {network: visa, field: cavvResultCode, value: FAILED, result: INVALID_3DS_VERIFICATION}
+    - {network: mastercard, field: aavResultCode, value: AAV_FAILED_VALIDATION, result: INVALID_3DS_VERIFICATION}
+  docs: https://docs.highnote.com/docs/issuing/transactions/sim-transactions
+notes: >-
+  Highnote does not publish a single flat ISO-8583 numeric decline-code table publicly; declines
+  are modeled as typed events, spend/velocity rule outcomes, and enum reasons. AVS and CVV
+  response codes are surfaced on the Card Transaction Activity Report.

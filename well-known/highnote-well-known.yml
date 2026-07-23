@@ -1,0 +1,27 @@
+generated: '2026-07-23'
+method: searched
+source: probe of /.well-known/ across api + docs + marketing hosts
+hosts:
+  - host: https://api.us.highnote.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/oauth-protected-resource, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+  - host: https://highnote.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+  - host: https://docs.highnote.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+notes: >-
+  No /.well-known/ discovery documents are published. Auth is HTTP Basic with a base64-encoded
+  API key (no OAuth/OIDC), so there is no oauth-authorization-server or openid-configuration to
+  serve. An LLM-facing index is instead published at https://docs.highnote.com/llms.txt (200) —
+  captured in llms/highnote-llms.txt.

@@ -1,0 +1,64 @@
+generated: '2026-07-23'
+method: searched
+source: https://docs.highnote.com/docs/developers/api/using-the-api
+description: >-
+  Cross-cutting request/response semantics for the Highnote single-endpoint GraphQL API,
+  captured from the developer docs and the GraphQL schema.
+authentication:
+  style: http-basic
+  detail: Base64-encoded API key supplied as the HTTP Basic username (empty password).
+  docs: https://docs.highnote.com/docs/developers/api/using-the-api
+  see: authentication/highnote-authentication.yml
+idempotency:
+  supported: true
+  mechanism: graphql-input-field
+  field: IdempotencyKey
+  format: Version 4 UUID
+  length: 10 to 255 characters
+  scope: All Highnote API mutations
+  behavior: >-
+    Highnote stores the IdempotencyKey with your Organization ID and query parameters and
+    compares incoming requests to distinguish new requests from retries, preventing duplicate
+    mutations. Recommended on all mutations, especially money movement and card issuance.
+  docs: https://docs.highnote.com/docs/developers/api/idempotency
+pagination:
+  style: relay-cursor
+  spec: GraphQL Cursor Connections (Relay)
+  request_params: [first, after, last, before]
+  response_fields: [edges, node, cursor, pageInfo.hasNextPage, pageInfo.hasPreviousPage, pageInfo.endCursor, pageInfo.startCursor]
+  docs: https://docs.highnote.com/docs/developers/api/intro-to-graphql
+search:
+  language: Highnote Query Language (HQL)
+  detail: Query and filter accounts, cards, transactions and other objects with HQL; combine date, number, string, and enum filters.
+  docs: https://docs.highnote.com/docs/developers/api/search-hql
+metadata:
+  supported: true
+  mechanism: Custom key-value metadata fields on financial accounts and payment cards (link external IDs, tag, filter).
+  docs: https://docs.highnote.com/docs/developers/api/custom-metadata-fields
+request_tracing:
+  field: requestId
+  location: GraphQL response extensions.requestId
+  detail: Unique identifier per request; provide to Highnote support to troubleshoot failed requests.
+  docs: https://docs.highnote.com/docs/developers/api/error-handling
+error_envelope:
+  pattern: errors-as-data
+  detail: >-
+    Query/transport errors return a top-level GraphQL `errors` array (message, locations, errorPath).
+    Validation/business errors are returned as data via a UserError type in mutation response unions.
+  see: errors/highnote-problem-types.yml
+versioning:
+  scheme: continuous / schema-evolution
+  detail: >-
+    No URL/date version. The GraphQL schema evolves continuously; changes are classified
+    (NON_BREAKING / DANGEROUS / BREAKING) and queryable via the schemaChangelogs query.
+    Breaking changes get 90 days advance notice.
+  see: [lifecycle/highnote-lifecycle.yml, changelog/highnote-changelog.yml]
+rate_limiting:
+  model: request-count + request-complexity
+  signal: HTTP 429 on limit exceeded; implement exponential backoff
+  detail: Each GraphQL query has a computed complexity cost; both request count and complexity are limited.
+  docs: https://docs.highnote.com/docs/developers/api/rate-limiting
+  see: rate-limits/highnote-rate-limits.yml
+entity_ids:
+  detail: Prefixed opaque entity IDs; object type identifiable via the __typename field.
+  docs: https://docs.highnote.com/docs/developers/api/entity-ids-and-object-types

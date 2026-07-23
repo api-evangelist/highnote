@@ -279,12 +279,60 @@ common:
   url: https://support.highnote.com/hc/en-us
 - type: StatusPage
   url: https://status.highnote.com
+- type: GettingStarted
+  url: https://docs.highnote.com/docs/get-started/about-highnote
+- type: SignUp
+  url: https://dashboard.highnote.com
 - type: Plans
   url: plans/highnote-plans-pricing.yml
 - type: RateLimits
   url: rate-limits/highnote-rate-limits.yml
 - type: FinOps
   url: finops/highnote-finops.yml
+- type: Packages
+  url: packages/highnote-packages.yml
+- type: SDKs
+  url: packages/highnote-packages.yml
+- type: MCPServer
+  url: mcp/highnote-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/highnote-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/highnote-llms.txt
+- type: WellKnown
+  url: well-known/highnote-well-known.yml
+- type: Overlay
+  url: overlays/highnote-graphql-api-overlay.yaml
+- type: Conformance
+  url: conformance/highnote-conformance.yml
+- type: Compliance
+  url: https://docs.highnote.com/docs/get-started/introduction/pci-dss-compliance
+- type: ErrorCatalog
+  url: errors/highnote-problem-types.yml
+- type: DeclineCodes
+  url: errors/highnote-decline-codes.yml
+- type: Lifecycle
+  url: lifecycle/highnote-lifecycle.yml
+- type: Deprecation
+  url: https://docs.highnote.com/docs/developers/api/status-changes
+- type: Conventions
+  url: conventions/highnote-conventions.yml
+- type: Idempotency
+  url: conventions/highnote-conventions.yml
+- type: ChangeLog
+  url: changelog/highnote-changelog.yml
+- type: Sandbox
+  url: sandbox/highnote-sandbox.yml
+- type: Components
+  url: components/highnote-components.yml
+- type: DataModel
+  url: data-model/highnote-data-model.yml
+- type: AsyncAPI
+  url: asyncapi/highnote-events-asyncapi.yml
+- type: Webhooks
+  url: asyncapi/highnote-events-asyncapi.yml
+- type: AgentSkill
+  url: skills/_index.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

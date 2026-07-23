@@ -1,0 +1,44 @@
+generated: '2026-07-23'
+method: searched
+source: https://docs.highnote.com/docs/developers/sdks/about-sdks
+description: >-
+  Highnote ships first-party client-side embeddable UI components (iframe-based) that keep PCI
+  data off the subscriber's servers. Distinct from the server-side integration surface; catalogued
+  as embeddable components. Loader libraries are published under the @highnoteplatform npm scope.
+families:
+  - family: Acquiring
+    components:
+      - name: Checkout SDK
+        package: "@highnoteplatform/checkout"
+        detail: Drop-in payment card checkout form; collects card details securely via iframe without PCI data exposure.
+        docs: https://docs.highnote.com/docs/developers/sdks/acquiring/checkout-sdk
+      - name: Secure Inputs (Tokenization)
+        package: "@highnoteplatform/secure-inputs"
+        detail: Custom payment card input fields that tokenize card data via iframe.
+        docs: https://docs.highnote.com/docs/developers/sdks/acquiring/secure-inputs-sdk-tokenization
+  - family: Issuing
+    components:
+      - name: Card Viewer SDK
+        package: "@highnoteplatform/card-viewer"
+        detail: Render an issued payment card (PAN/CVV/expiry) securely in your UI.
+        docs: https://docs.highnote.com/docs/developers/sdks/issuing/card-viewer-sdk
+      - name: Document Upload SDK
+        package: "@highnoteplatform/document-upload"
+        detail: Upload required KYC/KYB documents.
+        docs: https://docs.highnote.com/docs/developers/sdks/issuing/document-upload-sdk
+      - name: Secure Inputs (PINs)
+        package: "@highnoteplatform/secure-inputs"
+        detail: Securely capture and set card PINs via iframe.
+        docs: https://docs.highnote.com/docs/developers/sdks/issuing/secure-inputs-sdk-pins
+  - family: Risk
+    components:
+      - name: Risk Application SDK
+        package: "@highnoteplatform/risk-application"
+        detail: Early fraud detection signals collected during onboarding.
+loader_libraries:
+  - "@highnoteplatform/protocol"
+client_tokens:
+  detail: Client-side components authenticate with short-lived client tokens generated server-side.
+  docs: https://docs.highnote.com/docs/developers/sdks/client-tokens
+package_managers: [npm, yarn, pnpm, cdn]
+see: packages/highnote-packages.yml

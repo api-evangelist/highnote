@@ -1,0 +1,20 @@
+generated: '2026-07-23'
+method: searched
+source: https://docs.highnote.com/docs/developers/api/status-changes
+scheme: graphql-schema-changelog
+detail: >-
+  Highnote does not publish a dated human release-notes page. API changes are exposed
+  programmatically through the schemaChangelogs GraphQL query, which returns recent schema
+  changes with a changeType (e.g. FIELD_ADDED), a criticality (NON_BREAKING, DANGEROUS,
+  BREAKING), and a human-readable message. Results are Relay-paginated.
+query: schemaChangelogs
+change_types_observed: [FIELD_ADDED]
+criticality_levels: [NON_BREAKING, DANGEROUS, BREAKING]
+breaking_change_notice_days: 90
+scope_note: SchemaChangelog covers GraphQL schema changes only; Dashboard and UI changes are excluded.
+docs: https://docs.highnote.com/docs/developers/api/status-changes
+status_page: https://status.highnote.com
+entries: []
+entries_note: >-
+  The live changelog is the source of truth and is queried via the schemaChangelogs GraphQL
+  field (authenticated). No static dated entries are published to snapshot here.
