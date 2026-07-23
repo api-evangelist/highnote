@@ -79,6 +79,62 @@ actions:
     document was authored. The GraphQL surface is modeled in
     graphql/highnote-graphql.md and graphql/highnote-schema.graphql, and the
     GraphQL-over-HTTP endpoint is modeled in openapi/highnote-openapi.yml.
+developerSurfaceReview:
+  reviewer: API Evangelist
+  date: '2026-07-23'
+  developerPortal: https://docs.highnote.com/docs/developers/about-developers
+  summary: |
+    Highnote runs a rich, fully public first-party developer portal at
+    docs.highnote.com (Developer Resources > about-developers), organized around
+    three product pillars — Issuing, Acquiring, and Money Movement — plus Credit,
+    account onboarding, spend controls / collaborative authorization, transactions
+    & disputes, and event notifications. Despite the breadth of documented product
+    areas, the ENTIRE platform is a SINGLE GraphQL endpoint at
+    https://api.us.highnote.com/graphql (test: https://api.us.test.highnote.com/graphql).
+    Each product area in this apis.json is modeled as a distinct apis[] entry with
+    its own verified humanURL, but all share the one GraphQL baseURL.
+  authModel: |
+    HTTP Basic authentication. A base64-encoded API key (created in the Highnote
+    Dashboard under Developers > API Keys) is supplied as the username with an empty
+    password — i.e. Authorization: Basic <base64(apiKey)>. No OAuth2/OIDC, no mTLS,
+    no per-request signing documented. Idempotency keys, Relay cursor pagination,
+    HQL search, custom metadata, and documented rate limiting are platform features.
+  downloadableSpecs: |
+    None. Highnote does NOT publish a downloadable OpenAPI/Swagger file, a
+    downloadable GraphQL SDL/introspection schema, or a Postman collection on its
+    public docs. Developer interaction is via an interactive in-portal API Explorer
+    plus the API Reference (Query/Mutation/Object/Input/Enum/Union/Scalar/Interface
+    /Union pages). The GitHub org github.com/Highnote-Platform exists but publishes
+    no public repositories/SDKs.
+  specProvenance: |
+    openapi/highnote-graphql-api-openapi.yml is an API-Evangelist-authored, faithful
+    OpenAPI 3.0.1 wrapper of the GraphQL-over-HTTP surface (single POST /graphql,
+    Basic auth, GraphQL request/response schemas, real example ping/listCardProducts
+    /issuePaymentCard operations). It is NOT a vendor-published spec — it models the
+    documented transport honestly. The GraphQL surface itself is captured in
+    graphql/highnote-graphql.md and graphql/highnote-schema.graphql. No verbatim
+    vendor OpenAPI/GraphQL schema was harvestable because Highnote publishes none.
+  openFinancePosture: |
+    US voluntary open-finance context. Highnote is a card-issuer-processor / BaaS,
+    not a deposit bank exposing consumer-permissioned account aggregation, so it is
+    not an FDX data provider and states no CFPB 1033 consumer data-access posture of
+    its own. Its money-movement product CONSUMES external bank-account linking via
+    aggregators (Plaid/Finicity) to fund transfers, rather than exposing an
+    aggregator-facing data API. Banking services are delivered through partner
+    bank(s); Highnote is the program-management and processing layer.
+  verifiedLinks:
+    - {url: 'https://highnote.com', status: 200, type: Website}
+    - {url: 'https://docs.highnote.com/docs/developers/about-developers', status: 200, type: DeveloperPortal}
+    - {url: 'https://docs.highnote.com/docs/issuing/about-issuing', status: 200, type: Documentation}
+    - {url: 'https://docs.highnote.com/docs/acquiring/about-acquiring', status: 200, type: Documentation}
+    - {url: 'https://docs.highnote.com/docs/money-movement/about-money-movement', status: 200, type: Documentation}
+    - {url: 'https://highnote.com/pricing', status: 200, type: Pricing}
+    - {url: 'https://highnote.com/blog', status: 200, type: Blog}
+    - {url: 'https://status.highnote.com', status: 200, type: StatusPage}
+    - {url: 'https://support.highnote.com/hc/en-us', status: 200, type: Support}
+    - {url: 'https://highnote.com/agreements/privacy', status: 200, type: PrivacyPolicy}
+    - {url: 'https://highnote.com/agreements/terms/01-05-22', status: 200, type: TermsOfService}
+    - {url: 'https://github.com/Highnote-Platform', status: 200, type: GitHubOrganization, note: 'org exists, zero public repos'}
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

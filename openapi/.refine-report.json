@@ -1,0 +1,14 @@
+{
+  "provider": "highnote",
+  "sources": [
+    "highnote-graphql-api-openapi.yml"
+  ],
+  "outputs": [
+    "highnote-graphql-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

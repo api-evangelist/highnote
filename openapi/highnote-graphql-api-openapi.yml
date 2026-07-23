@@ -1,0 +1,108 @@
+openapi: 3.0.1
+info:
+  title: Highnote GraphQL API
+  description: 'The Highnote embedded-finance platform is driven by a single GraphQL endpoint. This OpenAPI document models the GraphQL-over-HTTP surface: a single POST /graphql operation that accepts a GraphQL query or mutation plus optional variables, authenticated with HTTP Basic auth using a base64-encoded API key as the username (no password). See graphql/highnote-graphql.md and graphql/highnote-schema.graphql for the GraphQL types, queries, and mutations.'
+  termsOfService: https://highnote.com/legal
+  contact:
+    name: Highnote
+    url: https://docs.highnote.com
+  version: '1.0'
+servers:
+- url: https://api.us.highnote.com
+  description: Live environment
+- url: https://api.us.test.highnote.com
+  description: Test environment
+security:
+- basicAuth: []
+tags:
+- name: GraphQL
+  description: Single GraphQL endpoint for all Highnote operations.
+paths:
+  /graphql:
+    post:
+      operationId: postGraphql
+      tags:
+      - GraphQL
+      summary: Execute a GraphQL query or mutation
+      description: Executes a GraphQL operation against the Highnote platform. The request body is a JSON object with a `query` string (which may contain a query or a mutation), an optional `variables` object, and an optional `operationName`. Responses always return HTTP 200 with a `data` and/or `errors` field per the GraphQL-over-HTTP convention.
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GraphQLRequest'
+            examples:
+              ping:
+                summary: Health check query
+                value:
+                  query: query { ping }
+              listCardProducts:
+                summary: List card products
+                value:
+                  query: 'query { cardProducts(first: 10) { edges { node { id name type status } } pageInfo { hasNextPage endCursor } } }'
+              issuePaymentCard:
+                summary: Issue a virtual payment card
+                value:
+                  query: 'mutation IssueCard($applicationId: ID!) { issuePaymentCardForApplication(input: { applicationId: $applicationId, formFactor: VIRTUAL }) { id bin last4 expirationDate network status } }'
+                  variables:
+                    applicationId: card_product_application_id
+      responses:
+        '200':
+          description: GraphQL response. Returns HTTP 200 even when the operation produces GraphQL errors; inspect the `errors` array.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphQLResponse'
+        '401':
+          description: Missing or invalid API key (Basic auth).
+        '429':
+          description: Rate limited. Retry with backoff.
+components:
+  schemas:
+    GraphQLRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+          description: The GraphQL query or mutation document.
+        variables:
+          type: object
+          additionalProperties: true
+          description: Optional variable values referenced by the query document.
+        operationName:
+          type: string
+          description: Optional operation name when the document defines multiple operations.
+    GraphQLResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: The result of the executed operation, keyed by field name.
+        errors:
+          type: array
+          description: GraphQL errors, if any were produced during execution.
+          items:
+            $ref: '#/components/schemas/GraphQLError'
+    GraphQLError:
+      type: object
+      properties:
+        message:
+          type: string
+        path:
+          type: array
+          items:
+            type: string
+        extensions:
+          type: object
+          additionalProperties: true
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'HTTP Basic auth. The base64-encoded API key is supplied as the username and the password is left empty. Equivalent to sending `Authorization: Basic <base64(apiKey)>`.'
