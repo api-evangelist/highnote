@@ -251,6 +251,8 @@ apis:
   - type: GraphQL
     url: graphql/highnote-graphql.md
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/highnote/overview
 - type: AgenticAccess
   url: agentic-access/highnote-agentic-access.yml
 - type: DomainSecurity
