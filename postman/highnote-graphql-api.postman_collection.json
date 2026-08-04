@@ -1,0 +1,254 @@
+{
+  "info": {
+    "_postman_id": "e1f0d5bd-25e1-499a-befa-4de1334284f2",
+    "name": "Highnote GraphQL API",
+    "description": "The Highnote embedded-finance platform is driven by a single GraphQL endpoint. This OpenAPI document models the GraphQL-over-HTTP surface: a single POST /graphql operation that accepts a GraphQL query or mutation plus optional variables, authenticated with HTTP Basic auth using a base64-encoded API key as the username (no password). See graphql/highnote-graphql.md and graphql/highnote-schema.graphql for the GraphQL types, queries, and mutations.\n\nContact Support:\n Name: Highnote",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:56:06.000Z",
+    "updatedAt": "2026-07-28T01:56:07.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-e1f0d5bd-25e1-499a-befa-4de1334284f2"
+  },
+  "item": [
+    {
+      "name": "graphql",
+      "item": [
+        {
+          "name": "Execute a GraphQL query or mutation",
+          "id": "c37fce44-e8b0-4187-8ee3-c62d063d7eb5",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {\n    \"cupidatat2\": false,\n    \"esse_7d\": 17916842.1120155,\n    \"nostrud_ec\": 77843024\n  },\n  \"operationName\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            },
+            "description": "Executes a GraphQL operation against the Highnote platform. The request body is a JSON object with a `query` string (which may contain a query or a mutation), an optional `variables` object, and an optional `operationName`. Responses always return HTTP 200 with a `data` and/or `errors` field per the GraphQL-over-HTTP convention."
+          },
+          "response": [
+            {
+              "id": "f6bafeb3-797f-4c43-9586-461f23282c75",
+              "name": "GraphQL response. Returns HTTP 200 even when the operation produces GraphQL errors; inspect the `errors` array.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {\n    \"cupidatat2\": false,\n    \"esse_7d\": 17916842.1120155,\n    \"nostrud_ec\": 77843024\n  },\n  \"operationName\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/graphql",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "graphql"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"data\": {\n    \"laborumef_\": -1706215.7923681438\n  },\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"path\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"extensions\": {\n        \"Ut__\": 68498284.23654082\n      }\n    },\n    {\n      \"message\": \"<string>\",\n      \"path\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"extensions\": {\n        \"anim_4bf\": false,\n        \"veniam_\": 66340520\n      }\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:56:07.000Z",
+              "updatedAt": "2026-07-28T01:56:07.000Z",
+              "uid": "35240-f6bafeb3-797f-4c43-9586-461f23282c75"
+            },
+            {
+              "id": "a494b0e0-34cc-40a2-810f-d98d1f394902",
+              "name": "Missing or invalid API key (Basic auth).",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {\n    \"cupidatat2\": false,\n    \"esse_7d\": 17916842.1120155,\n    \"nostrud_ec\": 77843024\n  },\n  \"operationName\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/graphql",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "graphql"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T01:56:07.000Z",
+              "updatedAt": "2026-07-28T01:56:07.000Z",
+              "uid": "35240-a494b0e0-34cc-40a2-810f-d98d1f394902"
+            },
+            {
+              "id": "47a9dfa5-f1fb-4aab-bde7-828274363db3",
+              "name": "Rate limited. Retry with backoff.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {\n    \"cupidatat2\": false,\n    \"esse_7d\": 17916842.1120155,\n    \"nostrud_ec\": 77843024\n  },\n  \"operationName\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/graphql",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "graphql"
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T01:56:07.000Z",
+              "updatedAt": "2026-07-28T01:56:07.000Z",
+              "uid": "35240-47a9dfa5-f1fb-4aab-bde7-828274363db3"
+            }
+          ],
+          "createdAt": "2026-07-28T01:56:07.000Z",
+          "updatedAt": "2026-07-28T01:56:07.000Z",
+          "uid": "35240-c37fce44-e8b0-4187-8ee3-c62d063d7eb5"
+        }
+      ],
+      "id": "0353bd8f-7b23-40d0-80d3-40c12afc908f",
+      "createdAt": "2026-07-28T01:56:07.000Z",
+      "updatedAt": "2026-07-28T01:56:07.000Z",
+      "uid": "35240-0353bd8f-7b23-40d0-80d3-40c12afc908f"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.us.highnote.com"
+    }
+  ]
+}
