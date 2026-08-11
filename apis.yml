@@ -287,7 +287,7 @@ common:
   url: https://status.highnote.com
 - type: GettingStarted
   url: https://docs.highnote.com/docs/get-started/about-highnote
-- type: SignUp
+- type: Signup
   url: https://dashboard.highnote.com
 - type: Plans
   url: plans/highnote-plans-pricing.yml
@@ -319,7 +319,7 @@ common:
   url: errors/highnote-decline-codes.yml
 - type: Lifecycle
   url: lifecycle/highnote-lifecycle.yml
-- type: Deprecation
+- type: DeprecationPolicy
   url: https://docs.highnote.com/docs/developers/api/status-changes
 - type: Conventions
   url: conventions/highnote-conventions.yml
@@ -337,7 +337,7 @@ common:
   url: asyncapi/highnote-events-asyncapi.yml
 - type: Webhooks
   url: asyncapi/highnote-events-asyncapi.yml
-- type: AgentSkill
+- type: AgentSkills
   url: skills/_index.yml
 maintainers:
 - FN: Kin Lane
