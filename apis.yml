@@ -251,6 +251,8 @@ apis:
   - type: GraphQL
     url: graphql/highnote-graphql.md
 common:
+- type: APIReference
+  url: https://docs.highnote.com/docs/tags/api
 - type: SDKs
   url: https://docs.highnote.com/docs/developers/sdks/about-sdks
 - type: PostmanWorkspace
