@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Highnote GraphQL API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "GraphQL",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute a GraphQL query or mutation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.us.highnote.com/graphql",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Executes a GraphQL operation against the Highnote platform. The request body is a JSON object with a `query` string (which may contain a query or a mutation), an optional `variables` object, and an optional `operationName`. Responses always return HTTP 200 with a `data` and/or `errors` field per the GraphQL-over-HTTP convention."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
