@@ -57,7 +57,7 @@ tags:
 - United States
 created: '2026-06-20'
 modified: '2026-07-23'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: highnote:highnote-issuing-api
   name: Highnote Issuing API
