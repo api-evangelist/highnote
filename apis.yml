@@ -45,6 +45,20 @@ tags:
 - Card Issuing
 - Card Acquiring
 - Embedded Finance
+- Banking as a Service
+- Fintech
+- Payments
+- GraphQL
+- Ledger
+- Credit
+- Money Movement
+- ACH
+- KYC
+- United States
+tags_raw:
+- Card Issuing
+- Card Acquiring
+- Embedded Finance
 - Banking-as-a-Service
 - Fintech
 - Payments
@@ -103,6 +117,14 @@ apis:
   humanURL: https://docs.highnote.com/docs/issuing/accounts/onboarding/onboard-an-account
   baseURL: https://api.us.highnote.com/graphql
   tags:
+  - Onboarding
+  - KYC
+  - KYB
+  - Application
+  - Compliance
+  - GraphQL
+  - United States
+  tags_raw:
   - Account Holders
   - Onboarding
   - KYC
@@ -190,6 +212,14 @@ apis:
   humanURL: https://docs.highnote.com/docs/issuing/transactions/transaction-lifecycle
   baseURL: https://api.us.highnote.com/graphql
   tags:
+  - Transaction
+  - Disputes
+  - Clearing
+  - Ledger
+  - Reporting
+  - GraphQL
+  - United States
+  tags_raw:
   - Transactions
   - Disputes
   - Clearing
@@ -246,6 +276,14 @@ apis:
   humanURL: https://docs.highnote.com/docs/developers/about-developers
   baseURL: https://api.us.highnote.com/graphql
   tags:
+  - Webhook
+  - Event Notifications
+  - Event
+  - Subscription
+  - Real-Time
+  - GraphQL
+  - United States
+  tags_raw:
   - Webhooks
   - Event Notifications
   - Events
