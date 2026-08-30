@@ -45,7 +45,7 @@ tags:
 - Card Issuing
 - Card Acquiring
 - Embedded Finance
-- Banking as a Service
+- Banking-as-a-Service
 - Fintech
 - Payments
 - GraphQL
@@ -117,6 +117,7 @@ apis:
   humanURL: https://docs.highnote.com/docs/issuing/accounts/onboarding/onboard-an-account
   baseURL: https://api.us.highnote.com/graphql
   tags:
+  - Account Holders
   - Onboarding
   - KYC
   - KYB
