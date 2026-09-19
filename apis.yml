@@ -81,6 +81,8 @@ apis:
   humanURL: https://docs.highnote.com/docs/issuing/about-issuing
   baseURL: https://api.us.highnote.com/graphql
   tags:
+  - GraphQL
+  tags_raw:
   - Graph QL
   properties:
   - type: OpenAPI
