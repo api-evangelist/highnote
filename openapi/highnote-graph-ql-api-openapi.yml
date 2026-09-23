@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Highnote GraphQL API
+  title: Highnote Graph QL API
   description: 'The Highnote embedded-finance platform is driven by a single GraphQL endpoint. This OpenAPI document models the GraphQL-over-HTTP surface: a single POST /graphql operation that accepts a GraphQL query or mutation plus optional variables, authenticated with HTTP Basic auth using a base64-encoded API key as the username (no password). See graphql/highnote-graphql.md and graphql/highnote-schema.graphql for the GraphQL types, queries, and mutations.'
   termsOfService: https://highnote.com/legal
   contact:
@@ -15,14 +15,14 @@ servers:
 security:
 - basicAuth: []
 tags:
-- name: GraphQL
+- name: Graph QL
   description: Single GraphQL endpoint for all Highnote operations.
 paths:
   /graphql:
     post:
       operationId: postGraphql
       tags:
-      - GraphQL
+      - Graph QL
       summary: Execute a GraphQL query or mutation
       description: Executes a GraphQL operation against the Highnote platform. The request body is a JSON object with a `query` string (which may contain a query or a mutation), an optional `variables` object, and an optional `operationName`. Responses always return HTTP 200 with a `data` and/or `errors` field per the GraphQL-over-HTTP convention.
       security:
@@ -80,9 +80,10 @@ components:
       type: object
       properties:
         data:
-          type: object
+          type:
+          - object
+          - 'null'
           additionalProperties: true
-          nullable: true
           description: The result of the executed operation, keyed by field name.
         errors:
           type: array
