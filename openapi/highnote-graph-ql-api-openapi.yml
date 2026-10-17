@@ -61,18 +61,20 @@ paths:
           description: Rate limited. Retry with backoff.
 components:
   schemas:
-    GraphQLError:
+    GraphQLResponse:
       type: object
       properties:
-        message:
-          type: string
-        path:
-          type: array
-          items:
-            type: string
-        extensions:
-          type: object
+        data:
+          type:
+          - object
+          - 'null'
           additionalProperties: true
+          description: The result of the executed operation, keyed by field name.
+        errors:
+          type: array
+          description: GraphQL errors, if any were produced during execution.
+          items:
+            $ref: '#/components/schemas/GraphQLError'
     GraphQLRequest:
       type: object
       required:
@@ -88,20 +90,18 @@ components:
         operationName:
           type: string
           description: Optional operation name when the document defines multiple operations.
-    GraphQLResponse:
+    GraphQLError:
       type: object
       properties:
-        data:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-          description: The result of the executed operation, keyed by field name.
-        errors:
+        message:
+          type: string
+        path:
           type: array
-          description: GraphQL errors, if any were produced during execution.
           items:
-            $ref: '#/components/schemas/GraphQLError'
+            type: string
+        extensions:
+          type: object
+          additionalProperties: true
   securitySchemes:
     basicAuth:
       type: http
