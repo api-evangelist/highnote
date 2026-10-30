@@ -1,4 +1,4 @@
-# Highnote (highnote)
+# Highnote
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,205 +64,160 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Highnote is a modern, unified embedded-finance platform for card issuing, acquiring, credit, and real-time money movement, with a built-in ledger and program management. The entire platform is driven by a single GraphQL API at https://api.us.highnote.com/graphql, authenticated with a base64-encoded API key over HTTP Basic auth, covering card products, account holders (persons and businesses), financial accounts, payment cards, transactions/authorizations, transfers, collaborative authorization, spend/velocity rules, and webhook notifications.
+Highnote is a modern, unified embedded-finance and banking-as-a-service platform for card issuing, card acquiring, credit, and real-time money movement, with a built-in real-time programmable ledger and full program management. The entire platform is driven by a single GraphQL API at https://api.us.highnote.com/graphql (test https://api.us.test.highnote.com/graphql), authenticated with a base64-encoded API key over HTTP Basic auth. One endpoint covers card products, US person and business account holders (KYC/KYB onboarding), financial accounts and credit lines, virtual/physical/tokenized payment cards, transaction authorization and clearing, disputes, spend and velocity rules, collaborative authorization, multi-rail money movement (ACH, wire, RTP, push-to-card), and outbound webhook event notifications. Highnote is a US-based platform serving digital-first businesses embedding financial products; access is enterprise, contract-gated, with self-serve dashboard signup and a test environment.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/highnote/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/highnote/refs/heads/main/apis.yml)
+**Areas:** Card Issuing · Card Acquiring · Embedded Finance · Banking as a Service · Fintech · Payments · GraphQL · Ledger · Credit · Money Movement · ACH · KYC
 
-## Tags
+## Highnote on APIs.io
 
-- Card Issuing
-- Embedded Finance
-- Fintech
-- Payments
-- GraphQL
-- Ledger
-- Credit
+Everything profiled for Highnote is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/highnote/](https://apis.io/providers/highnote/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (1)
 
-- **Created:** 2026-06-20
-- **Modified:** 2026-06-20
+- [Highnote Graph QL API](https://apis.io/apis/highnote/highnote-graph-ql-api/) — Single GraphQL endpoint for all Highnote operations.
 
-## APIs
+### Published properties
 
-### Highnote Card Issuing API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Create and configure card products (createCardProduct), issue virtual, physical, and tokenized digital payment cards (issuePaymentCardForApplication, createPhysicalCardGroupOrder), activate and close cards, push-provision to Apple Pay / Google Pay, and attach spend and velocity rules. Driven through the single GraphQL endpoint with Basic auth.
+#### AsyncAPI (1)
 
-- **Human URL:** [https://docs.highnote.com/docs/issuing/get-started-issuing/issuing-overview](https://docs.highnote.com/docs/issuing/get-started-issuing/issuing-overview)
-- **Base URL:** `https://api.us.highnote.com/graphql`
+Event-driven and webhook contracts.
 
-#### Tags
+- [Highnote Event Notifications](https://apis.io/asyncapis/highnote/highnote-events-asyncapi/)
 
-- Card Products
-- Payment Cards
-- Virtual Cards
-- Physical Cards
-- GraphQL
+#### Event channels (1)
 
-#### Properties
+Individual events and webhooks the provider emits.
 
-- [Documentation](https://docs.highnote.com/docs/issuing/get-started-issuing/issuing-overview)
-- [API Reference](https://docs.highnote.com/docs/api-reference/mutation)
-- [GraphQL](graphql/highnote-graphql.md) — [GraphQL](https://spec.graphql.org)
-- [OpenAPI](openapi/highnote-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/highnote.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/highnote.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [/](https://apis.io/channels/highnote/notifications/)
 
-### Highnote Account Holders API
+#### GraphQL (1)
 
-Onboard US person and US business account holders (createUSPersonAccountHolder, createUSBusinessAccountHolder), manage authorized users, submit and accept card product applications (createAccountHolderCardProductApplication), run KYC/KYB and identity-update flows, and query personAccountHolders / businessAccountHolders.
+GraphQL schemas.
 
-- **Human URL:** [https://docs.highnote.com/docs/api-reference/mutation](https://docs.highnote.com/docs/api-reference/mutation)
-- **Base URL:** `https://api.us.highnote.com/graphql`
+- [Highnote GraphQL API](https://apis.io/graphqls/highnote/highnote-graphql/)
 
-#### Tags
+#### MCP servers (1)
 
-- Account Holders
-- KYC
-- KYB
-- Applications
-- GraphQL
+Model Context Protocol servers that expose the API to agents.
 
-#### Properties
+- [highnote](https://apis.io/servers/highnote/highnote/)
 
-- [Documentation](https://docs.highnote.com/docs/developers/api/using-the-api)
-- [API Reference](https://docs.highnote.com/docs/api-reference/object)
-- [GraphQL](graphql/highnote-graphql.md) — [GraphQL](https://spec.graphql.org)
-- [OpenAPI](openapi/highnote-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/highnote.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/highnote.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Agentic access (1)
 
-### Highnote Financial Accounts API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-Issue financial accounts against approved applications (issueFinancialAccountForApplication), assign payment cards to financial accounts, manage credit limits and on-demand funding, and read balances and the real-time ledger via the FinancialAccount object and its account relationships.
+- [Highnote Agentic Access](https://apis.io/agentic-access/highnote/highnote-agentic-access/)
 
-- **Human URL:** [https://docs.highnote.com/docs/api-reference/object](https://docs.highnote.com/docs/api-reference/object)
-- **Base URL:** `https://api.us.highnote.com/graphql`
+#### Collections (3)
 
-#### Tags
+Postman and Open Collection request collections.
 
-- Financial Accounts
-- Ledger
-- Credit
-- Balances
-- GraphQL
+- [Highnote GraphQL API](https://apis.io/collections/highnote/open-highnote/)
+- [Highnote GraphQL API](https://apis.io/collections/highnote/open-highnote-graphql-api/)
+- [Highnote GraphQL API](https://apis.io/collections/highnote/postman-highnote-graphql-api/)
 
-#### Properties
+#### Overlays (2)
 
-- [Documentation](https://docs.highnote.com/docs/developers/api/using-the-api)
-- [API Reference](https://docs.highnote.com/docs/api-reference/object)
-- [GraphQL](graphql/highnote-graphql.md) — [GraphQL](https://spec.graphql.org)
-- [OpenAPI](openapi/highnote-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/highnote.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/highnote.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+OpenAPI overlays, including conversational phrasing for each operation.
 
-### Highnote Transactions API
+- [Highnote Graph Ql Api Phrasing Overlay](https://apis.io/overlays/highnote/highnote-graph-ql-api-phrasing-overlay/)
+- [Highnote Graphql Api Overlay](https://apis.io/overlays/highnote/highnote-graphql-api-overlay/)
 
-Authorize, capture, charge, and cancel payment transactions (authorizePaymentCard, capturePaymentTransaction, chargePaymentCard), handle incremental and force captures, initiate cardholder transaction disputes, and query paymentTransactions and transactionBatches with HQL search.
+#### Security (2)
 
-- **Human URL:** [https://docs.highnote.com/docs/api-reference/query](https://docs.highnote.com/docs/api-reference/query)
-- **Base URL:** `https://api.us.highnote.com/graphql`
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Tags
+- [Highnote Authentication](https://apis.io/security/highnote/highnote-authentication/)
+- [Highnote Domain Security](https://apis.io/security/highnote/highnote-domain-security/)
 
-- Authorizations
-- Transactions
-- Clearing
-- Disputes
-- GraphQL
+#### Plans and pricing (1)
 
-#### Properties
+Published plans, tiers and prices.
 
-- [Documentation](https://docs.highnote.com/docs/acquiring/about-acquiring)
-- [API Reference](https://docs.highnote.com/docs/api-reference/object)
-- [GraphQL](graphql/highnote-graphql.md) — [GraphQL](https://spec.graphql.org)
-- [OpenAPI](openapi/highnote-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/highnote.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/highnote.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Highnote Plans Pricing](https://apis.io/plans/highnote/highnote-plans-pricing/)
 
-### Highnote Transfers API
+#### Rate limits (1)
 
-Move funds between financial accounts and external bank accounts via ACH, wire, and instant-payment rails (initiateTransferBetweenFinancialAccounts, initiateAchTransfer, initiateUnifiedFundsTransfer), link external bank accounts through Plaid/Finicity, and schedule one-time and recurring transfers.
+Published request limits.
 
-- **Human URL:** [https://docs.highnote.com/docs/api-reference/mutation](https://docs.highnote.com/docs/api-reference/mutation)
-- **Base URL:** `https://api.us.highnote.com/graphql`
+- [Highnote Rate Limits](https://apis.io/rate-limits/highnote/highnote-rate-limits/)
 
-#### Tags
+#### FinOps (1)
 
-- Transfers
-- ACH
-- Money Movement
-- Instant Payments
-- GraphQL
+What the API costs to run, by operation.
 
-#### Properties
+- [Highnote Finops](https://apis.io/finops/highnote/highnote-finops/)
 
-- [Documentation](https://docs.highnote.com/docs/developers/api/using-the-api)
-- [API Reference](https://docs.highnote.com/docs/api-reference/mutation)
-- [GraphQL](graphql/highnote-graphql.md) — [GraphQL](https://spec.graphql.org)
-- [OpenAPI](openapi/highnote-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/highnote.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/highnote.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+## Where to find this API
 
-### Highnote Collaborative Authorization API
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-Register and manage a collaborative-authorization endpoint (addCollaborativeAuthorizationEndpoint, activateCollaborativeAuthorizationEndpoint) so your service participates in real-time authorization decisions, returning approve or decline responses on each card authorization within the network timeout window.
-
-- **Human URL:** [https://docs.highnote.com/docs/api-reference/mutation](https://docs.highnote.com/docs/api-reference/mutation)
-- **Base URL:** `https://api.us.highnote.com/graphql`
-
-#### Tags
-
-- Collaborative Authorization
-- Real-time Decisioning
-- Webhooks
-- GraphQL
-
-#### Properties
-
-- [Documentation](https://docs.highnote.com/docs/developers/api/using-the-api)
-- [API Reference](https://docs.highnote.com/docs/api-reference/mutation)
-- [GraphQL](graphql/highnote-graphql.md) — [GraphQL](https://spec.graphql.org)
-- [OpenAPI](openapi/highnote-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/highnote.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/highnote.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Highnote Webhooks & Notifications API
-
-Register HTTPS webhook notification targets (addWebhookNotificationTarget), activate and deactivate them, and subscribe to event types (addSubscriptionsToNotificationTarget) so Highnote pushes account, card, transaction, and transfer events to your systems. Events are also queryable via notificationEvents.
-
-- **Human URL:** [https://docs.highnote.com/docs/api-reference/mutation](https://docs.highnote.com/docs/api-reference/mutation)
-- **Base URL:** `https://api.us.highnote.com/graphql`
-
-#### Tags
-
-- Webhooks
-- Notifications
-- Events
-- Subscriptions
-- GraphQL
-
-#### Properties
-
-- [Documentation](https://docs.highnote.com/docs/developers/api/using-the-api)
-- [API Reference](https://docs.highnote.com/docs/api-reference/mutation)
-- [GraphQL](graphql/highnote-graphql.md) — [GraphQL](https://spec.graphql.org)
-- [OpenAPI](openapi/highnote-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/highnote.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/highnote.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/Highnote-Platform)
-- [LinkedIn](https://www.linkedin.com/company/highnote-platform)
 - [Website](https://highnote.com)
 - [Documentation](https://docs.highnote.com)
-- [Plans](plans/highnote-plans-pricing.yml)
-- [Rate Limits](rate-limits/highnote-rate-limits.yml)
-- [Fin Ops](finops/highnote-finops.yml)
+- [Getting started](https://docs.highnote.com/docs/get-started/about-highnote)
+- [API reference](https://docs.highnote.com/docs/tags/api)
+- [Pricing](https://highnote.com/pricing)
+- [Support](https://support.highnote.com/hc/en-us)
+- [Blog](https://highnote.com/blog)
+- [Compliance](https://docs.highnote.com/docs/get-started/introduction/pci-dss-compliance)
+- [Terms of service](https://highnote.com/agreements/terms/01-05-22)
+- [Privacy policy](https://highnote.com/agreements/privacy)
+- [GitHub](https://github.com/Highnote-Platform)
+- [Status](https://status.highnote.com)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 60.9** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 62.1 |
+| Contract governance | 18.2 |
+| Operational transparency | 55.3 |
+| Developer ergonomics | 74.4 |
+| Access clarity | 57.9 |
+
+**Agent readiness 31.0** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 39.3** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/highnote/](https://apis.io/providers/highnote/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Highnote: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/highnote/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
